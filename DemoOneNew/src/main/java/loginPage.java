@@ -1,12 +1,9 @@
-//written by jorge
+//written by jorge and ray
 
-//edited by ray
-//YO
 
 //imports used for swing
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -14,36 +11,40 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
+//imports used for mongodb
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 
-public class loginPage implements ActionListener {
-	
+public class loginPage implements ActionListener 
+{
+	//user entered credentials, defined later on
 	String userName;
 	String password;
 
+	//swing objects
     private static JLabel userLabel;
-    private static    JTextField userText;
-    private static    JLabel    passwordLabel;
-    private static    JPasswordField    passwordText;
-    private static JButton    lGbutton;
-    private static JLabel    success;
+    private static JTextField userText;
+    private static JLabel passwordLabel;
+    private static JPasswordField passwordText;
+    private static JButton lGbutton;
+    private static JLabel success;
     static JFrame frame = new JFrame();
 
     
     public static void main(String[] args) {
         
     }
-    public static void display() {
+    
+    
+    public static void display() 
+    {
         JPanel panel = new JPanel();
-        //JFrame frame = new JFrame();
         frame.setSize(380,350); //the size of the log in page
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); //what happens on close
         frame.setVisible(true); //makes the GUI visable
         frame.add(panel);
-        
         
         panel.setLayout(null);
         
@@ -68,32 +69,23 @@ public class loginPage implements ActionListener {
         lGbutton.addActionListener(new loginPage()); //enables action when clicked
         panel.add(lGbutton);
         
-            success = new JLabel("");
-            success.setBounds(10,110,300,25); //size of label
-            panel.add(success);
-            success.setText(null);
-            
-        
-        
-
+        success = new JLabel("");
+        success.setBounds(10,110,300,25); //size of label
+        panel.add(success);
+        success.setText(null);
+           
         frame.setVisible(true);
-        
-      
-        
              
     }
 
+    
     //@Override
-    public void actionPerformed(ActionEvent e) {
+    public void actionPerformed(ActionEvent e) 
+    {
         this.userName = userText.getText(); //user enters name
         this.password = passwordText.getText(); //user enters password
     	
-        
-//      //currently not creating a log in page when the demo is ran
-//    	loginPage login = new loginPage(); //links to loginPage.java
-//    	String username = login.userName; //gets the username entered by the user
-//    	String password = login.password; //gets the password entered by the user
-    	
+        //logging into mongodb
     	try
     	{
     		String credentials = "mongodb+srv://" + userName + ":" + password + "@cluster0.ho2gy.mongodb.net/myFirstDatabase?retryWrites=true&w=majority"; //connects to database
@@ -101,38 +93,16 @@ public class loginPage implements ActionListener {
 	        MongoDatabase db = client.getDatabase("SEProject"); //selects correct project
 	        MongoCollection col = db.getCollection( "Inventory"); //selects which collection
 	        System.out.println("Created Mongo Connection successfully"); 
-	        frame.setVisible(false);
 	        
+	        //closing log in page and opening home page
+	        frame.setVisible(false);
 	        homePage homeGui = new homePage();
 	        homeGui.display();
-	}catch (Exception e1) //log in unsuccessful
-	{
-		
+	    }
+    	catch (Exception e1) //log in unsuccessful
+    	{
     		System.out.println("Incorrect credentails.");
     	}
-    	
-   
-        
-        
-//    	
-//    	String user = userText.getText();
-//        String password = passwordText.getText();
-//        System.out.println(user + ", " + password);
-//        
-//        //temp. checks if correct credentials
-//        if(user.equals("Admin") && password.equals("Password1")) {
-//            success.setText("Login succesful");
-//        }else{
-//            success.setText("User ID and password dont match");
-//        }
-       
-        
-        
-        
-        
+    	      
     }
-
-
-
-
 }

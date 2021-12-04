@@ -1,12 +1,10 @@
-//written by zackary
-//Ayy
+//written by zackary and raymond
 //based off prototype, assisted by jorge and jordan
 
 
 //imports for swing
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
@@ -22,27 +20,27 @@ import java.awt.event.ActionEvent;
 import javax.swing.border.LineBorder;
 import java.awt.Color;
 
-public class homePage extends JFrame {
 
+public class homePage extends JFrame 
+{
+	//swing objects
 	private JPanel contentPane;
 	private JTextField userTextField;
 
-	/**
-	 * Launch the application.
-	 */
-
+	
 	public static void main(String[] args) {
 	
 	}
 	
-	public void display() {
+	public void display() 
+	{
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
 					homePage frame = new homePage();
-					frame.setVisible(true); //TRUE makes page visable
+					frame.setVisible(true); //TRUE makes page visible
 				} catch (Exception e) {
-					e.printStackTrace();
+					e.printStackTrace(); //prints any errors
 				}
 			}
 		});}
@@ -51,9 +49,9 @@ public class homePage extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public homePage() {
-		
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	public homePage() 
+	{
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); //what happens when closed
 		setBounds(100, 100, 1028, 720); //size of page
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -61,12 +59,12 @@ public class homePage extends JFrame {
 		contentPane.setLayout(null);
 		
 		JList list = new JList();
-		list.setBorder(new LineBorder(new Color(0, 0, 0)));
+		list.setBorder(new LineBorder(new Color(0, 0, 0))); //border color
 		list.setBounds(699, 57, 283, 581); //size of inventory list
 		contentPane.add(list);
 		
 		JLabel inventoryManagerLbl = new JLabel("Inventory Manager");
-		inventoryManagerLbl.setHorizontalAlignment(SwingConstants.CENTER);
+		inventoryManagerLbl.setHorizontalAlignment(SwingConstants.CENTER); //centers text within object
 		inventoryManagerLbl.setBounds(10, 15, 386, 14); //size of label
 		contentPane.add(inventoryManagerLbl);
 		
@@ -117,7 +115,7 @@ public class homePage extends JFrame {
 		
 		JButton continueBtn = new JButton("Enter");
 		continueBtn.addActionListener(new ActionListener() {
-			//nutton clicked action
+			//button clicked action
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
@@ -133,5 +131,6 @@ public class homePage extends JFrame {
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel.setBounds(10, 485, 386, 14); //size of label
 		contentPane.add(lblNewLabel);
+		
 	}
 }
