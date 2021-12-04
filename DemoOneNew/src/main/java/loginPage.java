@@ -14,6 +14,8 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
+import org.bson.Document;
+
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoCollection;
@@ -89,50 +91,30 @@ public class loginPage implements ActionListener {
         this.password = passwordText.getText(); //user enters password
     	
         
-//      //currently not creating a log in page when the demo is ran
-//    	loginPage login = new loginPage(); //links to loginPage.java
-//    	String username = login.userName; //gets the username entered by the user
-//    	String password = login.password; //gets the password entered by the user
-    	
     	try
     	{
-    		String credentials = "mongodb+srv://" + userName + ":" + password + "@cluster0.ho2gy.mongodb.net/myFirstDatabase?retryWrites=true&w=majority"; //connects to database
-	        MongoClient client = MongoClients.create(credentials); //logged into the user in the database
+    		final String credentials = "mongodb+srv://" + userName + ":" + password + "@cluster0.ho2gy.mongodb.net/myFirstDatabase?retryWrites=true&w=majority"; //connects to database
+    		MongoClient client = MongoClients.create(credentials); //logged into the user in the database
 	        MongoDatabase db = client.getDatabase("SEProject"); //selects correct project
 	        MongoCollection col = db.getCollection( "Inventory"); //selects which collection
+	   //The following line will force an error if the credentials are incorrect
+	        col.countDocuments();
 	        System.out.println("Created Mongo Connection successfully"); 
+	        	        
 	        frame.setVisible(false);
-	        
 	        homePage homeGui = new homePage();
 	        homeGui.display();
+   
+	        
 	}catch (Exception e1) //log in unsuccessful
 	{
 		
     		System.out.println("Incorrect credentails.");
     	}
     	
-   
-        
-        
-//    	
-//    	String user = userText.getText();
-//        String password = passwordText.getText();
-//        System.out.println(user + ", " + password);
-//        
-//        //temp. checks if correct credentials
-//        if(user.equals("Admin") && password.equals("Password1")) {
-//            success.setText("Login succesful");
-//        }else{
-//            success.setText("User ID and password dont match");
-//        }
-       
-        
-        
-        
+           
         
     }
-
-
 
 
 }
