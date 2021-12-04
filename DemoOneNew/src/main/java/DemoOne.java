@@ -20,8 +20,10 @@ public class DemoOne {
     	
     
     
-      loginPage gui = new loginPage();
-      gui.display();
+      loginPage logGui = new loginPage();
+      logGui.display();
+      
+    
                
                 
     

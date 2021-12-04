@@ -29,7 +29,12 @@ public class homePage extends JFrame {
 	/**
 	 * Launch the application.
 	 */
+
 	public static void main(String[] args) {
+	
+	}
+	
+	public void display() {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
@@ -39,13 +44,14 @@ public class homePage extends JFrame {
 					e.printStackTrace();
 				}
 			}
-		});
-	}
+		});}
+	
 
 	/**
 	 * Create the frame.
 	 */
 	public homePage() {
+		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1028, 720); //size of page
 		contentPane = new JPanel();
@@ -73,7 +79,6 @@ public class homePage extends JFrame {
 			@Override
 			//when mouse is clicked
 			public void mouseClicked(MouseEvent e) {
-				
 			}
 		});
 		addItemBtn.setBounds(8, 54, 386, 42);
@@ -113,8 +118,6 @@ public class homePage extends JFrame {
 		continueBtn.addActionListener(new ActionListener() {
 			//nutton clicked action
 			public void actionPerformed(ActionEvent e) {
-				
-				
 			}
 		});
 		continueBtn.addMouseListener(new MouseAdapter() {

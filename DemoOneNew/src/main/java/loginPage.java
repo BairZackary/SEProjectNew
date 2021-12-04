@@ -75,8 +75,7 @@ public class loginPage implements ActionListener {
 
         frame.setVisible(true);
         
-      /////////////////////////////////////////////
-        //Initiat
+      
         
              
     }
@@ -87,20 +86,22 @@ public class loginPage implements ActionListener {
         this.password = passwordText.getText(); //user enters password
     	
         
-      //currently not creating a log in page when the demo is ran
-    	loginPage login = new loginPage(); //links to loginPage.java
-    	String username = login.userName; //gets the username entered by the user
-    	String password = login.password; //gets the password entered by the user
+//      //currently not creating a log in page when the demo is ran
+//    	loginPage login = new loginPage(); //links to loginPage.java
+//    	String username = login.userName; //gets the username entered by the user
+//    	String password = login.password; //gets the password entered by the user
     	
     	try
     	{
-    		
-	    	String credentials = "mongodb+srv://" + username + ":" + password + "@cluster0.ho2gy.mongodb.net/myFirstDatabase?retryWrites=true&w=majority"; //connects to database
+    		String credentials = "mongodb+srv://" + userName + ":" + password + "@cluster0.ho2gy.mongodb.net/myFirstDatabase?retryWrites=true&w=majority"; //connects to database
 	        MongoClient client = MongoClients.create(credentials); //logged into the user in the database
-	        System.out.println("Created Mongo Connection successfully"); 
 	        MongoDatabase db = client.getDatabase("SEProject"); //selects correct project
 	        MongoCollection col = db.getCollection( "Inventory"); //selects which collection
+	        System.out.println("Created Mongo Connection successfully"); 
 	        frame.setVisible(false);
+	        
+	        homePage homeGui = new homePage();
+	        homeGui.display();
 	}catch (Exception e1) //log in unsuccessful
 	{
 		
