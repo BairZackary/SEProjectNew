@@ -1,4 +1,4 @@
-//written by Zack and raymond
+//written by Zack and raymond Duenas
 
 import java.util.Iterator; //used for printing out the items in the database
 import java.util.Scanner; //temp to test log in
