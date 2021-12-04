@@ -78,6 +78,7 @@ public class homePage extends JFrame
 			@Override
 			//when mouse is clicked
 			public void mouseClicked(MouseEvent e) {
+				addItem();
 			}
 		});
 		addItemBtn.setBounds(8, 54, 386, 42);
@@ -88,6 +89,7 @@ public class homePage extends JFrame
 			@Override
 			//when mouse is clicked
 			public void mouseClicked(MouseEvent e) {
+				removeItem();
 			}
 		});
 		removeItemBtn.setBounds(8, 107, 386, 52);
@@ -98,6 +100,7 @@ public class homePage extends JFrame
 			@Override
 			//when button is clicked
 			public void mouseClicked(MouseEvent e) {
+				search();
 			}
 		});
 		searchBtn.setBounds(10, 170, 384, 52); //button size
@@ -131,6 +134,41 @@ public class homePage extends JFrame
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel.setBounds(10, 485, 386, 14); //size of label
 		contentPane.add(lblNewLabel);
+		
+	}
+	
+	
+	//add item use case
+	public static void addItem()
+	{
+		
+	}
+	
+	
+	//remove item use case
+	public static void removeItem()
+	{
+		
+	}
+	
+	
+	//sort inventory use case
+	public static void sortInventory()
+	{
+		
+	}
+	
+	
+	//search use case
+	public static void search()
+	{
+		
+	}
+	
+	
+	//update inventory use case
+	public static void updateInventory()
+	{
 		
 	}
 }
