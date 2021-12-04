@@ -130,10 +130,10 @@ public class homePage extends JFrame
 		continueBtn.setBounds(439, 542, 222, 96); //size of button
 		contentPane.add(continueBtn);
 		
-		JLabel lblNewLabel = new JLabel("User Input");
-		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel.setBounds(10, 485, 386, 14); //size of label
-		contentPane.add(lblNewLabel);
+		JLabel userInput = new JLabel("User Input");
+		userInput.setHorizontalAlignment(SwingConstants.CENTER);
+		userInput.setBounds(10, 485, 386, 14); //size of label
+		contentPane.add(userInput);
 		
 	}
 	
@@ -141,7 +141,15 @@ public class homePage extends JFrame
 	//add item use case
 	public static void addItem()
 	{
-		
+		//pseudo-code
+//		systemOutLbl.setText("What is the name of the item?");
+//		wait for enter to be clicked
+//		itemName = userInput.getText();
+//		userInput.setText("");
+//		add item name to mongodb
+//		systemOutLbl.setText("How many items?");
+//		wait for enter
+//		amount = userInput.getText();
 	}
 	
 	
