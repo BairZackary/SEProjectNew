@@ -1,4 +1,5 @@
 //written by jorge
+//edited by ray
 
 //imports used for swing
 import java.awt.event.ActionEvent;
