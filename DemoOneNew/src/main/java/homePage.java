@@ -73,6 +73,7 @@ public class homePage extends JFrame {
 			@Override
 			//when mouse is clicked
 			public void mouseClicked(MouseEvent e) {
+				
 			}
 		});
 		addItemBtn.setBounds(8, 54, 386, 42);
@@ -112,6 +113,8 @@ public class homePage extends JFrame {
 		continueBtn.addActionListener(new ActionListener() {
 			//nutton clicked action
 			public void actionPerformed(ActionEvent e) {
+				
+				
 			}
 		});
 		continueBtn.addMouseListener(new MouseAdapter() {
