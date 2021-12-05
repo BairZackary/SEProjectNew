@@ -11,6 +11,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.JLabel;
 import javax.swing.JButton;
@@ -80,6 +81,17 @@ public class homePage extends JFrame {
 			@Override
 			//when mouse is clicked
 			public void mouseClicked(MouseEvent e) {
+				
+				String Response;
+				Response = JOptionPane.showInputDialog("Which item would you like to add?");
+				System.out.println(Response);
+				
+				String Answer;
+				Answer = JOptionPane.showInputDialog("How many would you like to add?");
+				//System.out.println(Response);
+				int i = Integer.parseInt(Answer);
+				System.out.println(i);
+				
 			}
 		});
 		addItemBtn.setBounds(8, 54, 386, 42);
@@ -90,6 +102,8 @@ public class homePage extends JFrame {
 			@Override
 			//when mouse is clicked
 			public void mouseClicked(MouseEvent e) {
+				
+				JOptionPane.showInputDialog("How many would you like to remove?");
 			}
 		});
 		removeItemBtn.setBounds(8, 107, 386, 52);
