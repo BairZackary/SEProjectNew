@@ -91,7 +91,7 @@ public class homePage extends JFrame {
 			
 			String answer;	
 			 answer = JOptionPane.showInputDialog("How many would you like to add");
-			 
+			 //test
 			// System.out.println(answer);
 			 int i = Integer.parseInt(answer);
 			 System.out.println(i);
