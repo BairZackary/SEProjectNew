@@ -11,6 +11,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.JLabel;
 import javax.swing.JButton;
@@ -75,12 +76,27 @@ public class homePage extends JFrame {
 		listLbl.setBounds(699, 15, 283, 31); //size of label
 		contentPane.add(listLbl);
 		
-		JButton addItemBtn = new JButton("Add Item");
+		/*final*/ JButton addItemBtn = new JButton("Add Item");
 		addItemBtn.addMouseListener(new MouseAdapter() {
 			@Override
 			//when mouse is clicked
 			public void mouseClicked(MouseEvent e) {
-			}
+				
+				String Response;
+				Response = JOptionPane.showInputDialog("for which item");
+				//Response.getText();
+				
+				System.out.println(Response);
+				
+			
+			String answer;	
+			 answer = JOptionPane.showInputDialog("How many would you like to add");
+			 
+			// System.out.println(answer);
+			 int i = Integer.parseInt(answer);
+			 System.out.println(i);
+				
+				}
 		});
 		addItemBtn.setBounds(8, 54, 386, 42);
 		contentPane.add(addItemBtn);
@@ -90,6 +106,7 @@ public class homePage extends JFrame {
 			@Override
 			//when mouse is clicked
 			public void mouseClicked(MouseEvent e) {
+				JOptionPane.showInputDialog("How many would you like to remove");
 			}
 		});
 		removeItemBtn.setBounds(8, 107, 386, 52);
@@ -100,6 +117,7 @@ public class homePage extends JFrame {
 			@Override
 			//when button is clicked
 			public void mouseClicked(MouseEvent e) {
+				JOptionPane.showInputDialog("what item are you looking for");
 			}
 		});
 		searchBtn.setBounds(10, 170, 384, 52); //button size
@@ -109,6 +127,7 @@ public class homePage extends JFrame {
 		userTextField.setBounds(10, 510, 384, 128); //text field size
 		contentPane.add(userTextField);
 		userTextField.setColumns(10);
+		
 		
 		JLabel systemOutLbl = new JLabel("System Output");
 		systemOutLbl.setHorizontalAlignment(SwingConstants.CENTER);
