@@ -12,6 +12,7 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
 //imports used for mongodb
+import org.bson.Document;
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoCollection;
@@ -38,6 +39,7 @@ public class loginPage implements ActionListener
     }
     
     
+    //called by DemoOne.java
     public static void display() 
     {
         JPanel panel = new JPanel();
@@ -88,21 +90,24 @@ public class loginPage implements ActionListener
         //logging into mongodb
     	try
     	{
-    		String credentials = "mongodb+srv://" + userName + ":" + password + "@cluster0.ho2gy.mongodb.net/myFirstDatabase?retryWrites=true&w=majority"; //connects to database
-	        MongoClient client = MongoClients.create(credentials); //logged into the user in the database
+    		final String credentials = "mongodb+srv://" + userName + ":" + password + "@cluster0.ho2gy.mongodb.net/myFirstDatabase?retryWrites=true&w=majority"; //connects to database
+    		MongoClient client = MongoClients.create(credentials); //logged into the user in the database
 	        MongoDatabase db = client.getDatabase("SEProject"); //selects correct project
 	        MongoCollection col = db.getCollection( "Inventory"); //selects which collection
+	        
+	        //The following line will force an error if the credentials are incorrect, log in was unsuccessful
+	        col.countDocuments();
 	        System.out.println("Created Mongo Connection successfully"); 
 	        
 	        //closing log in page and opening home page
 	        frame.setVisible(false);
-	        homePage homeGui = new homePage();
-	        homeGui.display();
+	        homePage homeGui = new homePage(); //creates homePage.java
+	        homeGui.display(); //calls homePage.java
 	    }
     	catch (Exception e1) //log in unsuccessful
     	{
     		System.out.println("Incorrect credentails.");
-    	}
-    	      
+    	}	      
     }
+    
 }

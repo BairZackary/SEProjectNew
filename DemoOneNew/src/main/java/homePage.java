@@ -1,5 +1,6 @@
-//written by zackary and raymond
-//based off prototype, assisted by jorge and jordan
+//initially written by zackary, with assistance from jorge and jordan
+//changes made by raymond
+//functions added by jorge
 
 
 //imports for swing
@@ -9,6 +10,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.JLabel;
 import javax.swing.JButton;
@@ -44,6 +46,8 @@ public class homePage extends JFrame
 	
 	}
 	
+	
+	//called by DemoOne.java
 	public void display() 
 	{
 		EventQueue.invokeLater(new Runnable() {
@@ -81,11 +85,14 @@ public class homePage extends JFrame
 		listLbl.setHorizontalAlignment(SwingConstants.CENTER);
 		listLbl.setBounds(699, 15, 283, 31); //size of label
 		contentPane.add(listLbl);
-		
-		addItemBtn.addMouseListener(new MouseAdapter() {
+
+		/*final*/ JButton addItemBtn = new JButton("Add Item");
+		addItemBtn.addMouseListener(new MouseAdapter() 
+		{
 			@Override
 			//when mouse is clicked
-			public void mouseClicked(MouseEvent e) {
+			public void mouseClicked(MouseEvent e) 
+			{
 				addItem();
 			}
 		});
@@ -95,7 +102,8 @@ public class homePage extends JFrame
 		removeItemBtn.addMouseListener(new MouseAdapter() {
 			@Override
 			//when mouse is clicked
-			public void mouseClicked(MouseEvent e) {
+			public void mouseClicked(MouseEvent e) 
+			{
 				removeItem();
 			}
 		});
@@ -105,7 +113,8 @@ public class homePage extends JFrame
 		searchBtn.addMouseListener(new MouseAdapter() {
 			@Override
 			//when button is clicked
-			public void mouseClicked(MouseEvent e) {
+			public void mouseClicked(MouseEvent e) 
+			{
 				search();
 			}
 		});
@@ -116,6 +125,8 @@ public class homePage extends JFrame
 		contentPane.add(userTextField);
 		userTextField.setColumns(10);
 		
+		
+		JLabel systemOutLbl = new JLabel("System Output");
 		systemOutLbl.setHorizontalAlignment(SwingConstants.CENTER);
 		systemOutLbl.setBounds(439, 432, 222, 67); //label size
 		contentPane.add(systemOutLbl);
@@ -152,13 +163,28 @@ public class homePage extends JFrame
 //		systemOutLbl.setText("How many items?");
 //		wait for enter
 //		amount = userInput.getText();
+		
+
+		String Response = JOptionPane.showInputDialog("What item is being added?");
+		//Response.getText();
+		System.out.println(Response); //testing user response
+		
+		String answer = JOptionPane.showInputDialog("How many of the item would you like to add?");
+		//System.out.println(answer); //testing user answer
+		int i = Integer.parseInt(answer); //turning the string input into an int
+		System.out.println(i); //testing parse
 	}
 	
 	
 	//remove item use case
 	public static void removeItem()
 	{
+		String Response = JOptionPane.showInputDialog("How many would you like to remove");
+		System.out.println(Response); //test
 		
+		String answer = JOptionPane.showInputDialog("How many of the item would you like to remove?");
+		int i = Integer.parseInt(answer); //turning the string input into an int
+		System.out.println(i); //testing parse
 	}
 	
 	
@@ -172,7 +198,8 @@ public class homePage extends JFrame
 	//search use case
 	public static void search()
 	{
-		
+		String Response = JOptionPane.showInputDialog("what item are you looking for");
+		System.out.println(Response);
 	}
 	
 	
