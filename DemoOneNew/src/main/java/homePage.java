@@ -84,17 +84,16 @@ public class homePage extends JFrame {
 				
 				String Response;
 				Response = JOptionPane.showInputDialog("for which item");
-				//Response.getText();
+
 				
 				System.out.println(Response);
 				
 			
-			String answer;	
-			 answer = JOptionPane.showInputDialog("How many would you like to add");
-			 //test
-			// System.out.println(answer);
-			 int i = Integer.parseInt(answer);
-			 System.out.println(i);
+				String answer;	
+				answer = JOptionPane.showInputDialog("How many would you like to add");
+			 
+				int i = Integer.parseInt(answer);
+				System.out.println(i);
 				
 				}
 		});
@@ -106,7 +105,17 @@ public class homePage extends JFrame {
 			@Override
 			//when mouse is clicked
 			public void mouseClicked(MouseEvent e) {
-				JOptionPane.showInputDialog("How many would you like to remove");
+				
+				String Response1;
+				Response1 = JOptionPane.showInputDialog("For which item");
+				System.out.println(Response1);
+				
+				
+				String answer1;
+				answer1 = JOptionPane.showInputDialog("How many would you like to remove");
+				int i = Integer.parseInt(answer1);
+				
+				System.out.println(i);
 			}
 		});
 		removeItemBtn.setBounds(8, 107, 386, 52);
@@ -117,7 +126,9 @@ public class homePage extends JFrame {
 			@Override
 			//when button is clicked
 			public void mouseClicked(MouseEvent e) {
-				JOptionPane.showInputDialog("what item are you looking for");
+				String search1;
+				search1 = JOptionPane.showInputDialog("what item are you looking for");
+				System.out.println(search1);
 			}
 		});
 		searchBtn.setBounds(10, 170, 384, 52); //button size
