@@ -9,17 +9,18 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+import javax.swing.border.LineBorder;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.JLabel;
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.SwingConstants;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-import javax.swing.border.LineBorder;
 import java.awt.Color;
 
 
@@ -27,6 +28,7 @@ public class homePage extends JFrame
 {
 	//swing objects
 	private JPanel contentPane;
+	//protected Component frame;
 	//private JTextField userTextField;
 	
 	//swing objects we interact with
@@ -36,10 +38,11 @@ public class homePage extends JFrame
 	JButton addItemBtn = new JButton("Add Item");
 	JButton removeItemBtn = new JButton("Remove Item");
 	JButton searchBtn = new JButton("Search");
-	JTextField userTextField = new JTextField();
+	static //static //JTextField userTextField = new JTextField();
+
 	JLabel systemOutLbl = new JLabel("System Output");
 	JButton continueBtn = new JButton("Enter");
-	JLabel userInput = new JLabel("User Input");
+	//JLabel userInput = new JLabel("User Input");
 
 	
 	public static void main(String[] args) {
@@ -67,6 +70,7 @@ public class homePage extends JFrame
 	 */
 	public homePage() 
 	{
+		//frame configuration
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); //what happens when closed
 		setBounds(100, 100, 1028, 720); //size of page
 		contentPane = new JPanel();
@@ -74,19 +78,20 @@ public class homePage extends JFrame
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
+		//inventory list
 		list.setBorder(new LineBorder(new Color(0, 0, 0))); //border color
 		list.setBounds(699, 57, 283, 581); //size of inventory list
 		contentPane.add(list);
-		
+		//inventory label
 		inventoryManagerLbl.setHorizontalAlignment(SwingConstants.CENTER); //centers text within object
 		inventoryManagerLbl.setBounds(10, 15, 386, 14); //size of label
 		contentPane.add(inventoryManagerLbl);
-		
 		listLbl.setHorizontalAlignment(SwingConstants.CENTER);
 		listLbl.setBounds(699, 15, 283, 31); //size of label
 		contentPane.add(listLbl);
 
-		/*final*/ JButton addItemBtn = new JButton("Add Item");
+		//add item
+		JButton addItemBtn = new JButton("Add Item");
 		addItemBtn.addMouseListener(new MouseAdapter() 
 		{
 			@Override
@@ -99,6 +104,7 @@ public class homePage extends JFrame
 		addItemBtn.setBounds(8, 54, 386, 42);
 		contentPane.add(addItemBtn);
 		
+		//remove item
 		removeItemBtn.addMouseListener(new MouseAdapter() {
 			@Override
 			//when mouse is clicked
@@ -110,6 +116,7 @@ public class homePage extends JFrame
 		removeItemBtn.setBounds(8, 107, 386, 52);
 		contentPane.add(removeItemBtn);
 		
+		//search
 		searchBtn.addMouseListener(new MouseAdapter() {
 			@Override
 			//when button is clicked
@@ -121,16 +128,18 @@ public class homePage extends JFrame
 		searchBtn.setBounds(10, 170, 384, 52); //button size
 		contentPane.add(searchBtn);
 		
-		userTextField.setBounds(10, 510, 384, 128); //text field size
-		contentPane.add(userTextField);
-		userTextField.setColumns(10);
+		//userTextField.setBounds(10, 510, 384, 128); //text field size
+		//contentPane.add(userTextField);
+		//userTextField.setColumns(10);
 		
 		
-		JLabel systemOutLbl = new JLabel("System Output");
+		//final JLabel systemOutLbl = new JLabel("System Output");
 		systemOutLbl.setHorizontalAlignment(SwingConstants.CENTER);
-		systemOutLbl.setBounds(439, 432, 222, 67); //label size
+		systemOutLbl.setBounds(10, 510, 384, 128); //label size
+		systemOutLbl.setText("Test");
 		contentPane.add(systemOutLbl);
 		
+		//enter button
 		continueBtn.addActionListener(new ActionListener() {
 			//button clicked action
 			public void actionPerformed(ActionEvent e) {
@@ -139,14 +148,11 @@ public class homePage extends JFrame
 		continueBtn.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				
 			}
 		});
 		continueBtn.setBounds(439, 542, 222, 96); //size of button
 		contentPane.add(continueBtn);
-		
-		userInput.setHorizontalAlignment(SwingConstants.CENTER);
-		userInput.setBounds(10, 485, 386, 14); //size of label
-		contentPane.add(userInput);
 		
 	}
 	
@@ -154,25 +160,16 @@ public class homePage extends JFrame
 	//add item use case
 	public static void addItem()
 	{
-		//pseudo-code
-//		systemOutLbl.setText("What is the name of the item?");
-//		wait for enter to be clicked
-//		itemName = userInput.getText();
-//		userInput.setText("");
-//		add item name to mongodb
-//		systemOutLbl.setText("How many items?");
-//		wait for enter
-//		amount = userInput.getText();
-		
-
 		String Response = JOptionPane.showInputDialog("What item is being added?");
-		//Response.getText();
 		System.out.println(Response); //testing user response
 		
 		String answer = JOptionPane.showInputDialog("How many of the item would you like to add?");
-		//System.out.println(answer); //testing user answer
 		int i = Integer.parseInt(answer); //turning the string input into an int
 		System.out.println(i); //testing parse
+		
+		//two options for outputing to the user
+		systemOutLbl.setText(answer + " have been added to the inventory");
+		//JOptionPane.showMessageDialog(frame, answer + " " + "have been added.");
 	}
 	
 	

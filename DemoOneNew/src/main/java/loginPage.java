@@ -101,8 +101,8 @@ public class loginPage implements ActionListener
 	        
 	        //closing log in page and opening home page
 	        frame.setVisible(false);
-	        homePage homeGui = new homePage(); //creates homePage.java
-	        homeGui.display(); //calls homePage.java
+	        //homePage homeGui = new homePage(); //creates homePage.java
+	        //homeGui.display(); //calls homePage.java
 	    }
     	catch (Exception e1) //log in unsuccessful
     	{
