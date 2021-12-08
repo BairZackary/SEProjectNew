@@ -115,7 +115,7 @@ public class homePage extends JFrame {
 				String Answer;
 				Answer = JOptionPane.showInputDialog("How many would you like to remove?");
 				// MongoDB code to remove number of item
-				
+				JOptionPane.showMessageDialog(frame, Answer + " " + Response + " removed from inventory.");
 			}
 		});
 		removeItemBtn.setBounds(8, 107, 386, 52);
