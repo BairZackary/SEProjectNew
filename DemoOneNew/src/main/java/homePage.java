@@ -22,11 +22,13 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.border.LineBorder;
 import java.awt.Color;
+import java.awt.Component;
 
 public class homePage extends JFrame {
 
 	private JPanel contentPane;
 	private JTextField userTextField;
+	protected Component frame;
 
 	/**
 	 * Launch the application.
@@ -80,6 +82,7 @@ public class homePage extends JFrame {
 		addItemBtn.addMouseListener(new MouseAdapter() {
 			@Override
 			//when mouse is clicked
+			
 			public void mouseClicked(MouseEvent e) {
 				
 				String Response;
@@ -95,7 +98,15 @@ public class homePage extends JFrame {
 				int i = Integer.parseInt(answer);
 				System.out.println(i);
 				
+				
+				//String confirmation;
+				//confirmation = JOptionPane.showInputDialog(i + " " +  Response + "were added");
+				//systemOutLbl(userTextField(i + Response + "were added"));
+				JOptionPane.showMessageDialog(frame, answer +" "+ Response +" added");
+				
 				}
+
+			
 		});
 		addItemBtn.setBounds(8, 54, 386, 42);
 		contentPane.add(addItemBtn);
@@ -147,7 +158,7 @@ public class homePage extends JFrame {
 		
 		JButton continueBtn = new JButton("Enter");
 		continueBtn.addActionListener(new ActionListener() {
-			//nutton clicked action
+			//button clicke action 
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
@@ -164,4 +175,6 @@ public class homePage extends JFrame {
 		lblNewLabel.setBounds(10, 485, 386, 14); //size of label
 		contentPane.add(lblNewLabel);
 	}
+
+	
 }
