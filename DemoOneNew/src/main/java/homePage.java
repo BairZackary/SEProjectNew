@@ -1,32 +1,34 @@
 //written by zackary
-//Ayy
 //based off prototype, assisted by jorge and jordan
+//edited by jorge ,jordan, and ray.
+
 
 
 //imports for swing
-import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.EventQueue;
-
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-import javax.swing.JList;
-import javax.swing.JOptionPane;
-import javax.swing.JTextField;
-import javax.swing.JLabel;
-import javax.swing.JButton;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JList;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
 import javax.swing.SwingConstants;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
+import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
-import java.awt.Color;
+import java.awt.Component;
 
 public class homePage extends JFrame {
 
 	private JPanel contentPane;
 	private JTextField userTextField;
+	protected Component frame;
 
 	/**
 	 * Launch the application.
@@ -92,6 +94,9 @@ public class homePage extends JFrame {
 				int i = Integer.parseInt(Answer);
 				// MongoDB code to add that many of the item
 				System.out.println(i);
+				
+				JOptionPane.showMessageDialog(frame, Answer + " " + Response + " added to inventory.");
+			
 				
 			}
 		});
