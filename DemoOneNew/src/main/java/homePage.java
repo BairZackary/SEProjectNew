@@ -10,18 +10,29 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
+import javax.swing.text.Document;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
+import javax.swing.ListModel;
 import javax.swing.JLabel;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
+import java.util.Iterator;
 import javax.swing.SwingConstants;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.Color;
+
+//imports for mongodb
+import com.mongodb.client.FindIterable;
+import com.mongodb.client.MongoClient;
+import com.mongodb.client.MongoClients;
+import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoDatabase;
 
 
 public class homePage extends JFrame 
@@ -31,7 +42,6 @@ public class homePage extends JFrame
 	//protected Component frame;
 	//private JTextField userTextField;
 	
-	//swing objects we interact with
 	JList list = new JList();
 	JLabel inventoryManagerLbl = new JLabel("Inventory Manager");
 	JLabel listLbl = new JLabel("Inventory List");
@@ -148,40 +158,85 @@ public class homePage extends JFrame
 		continueBtn.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				
+				Object[] testArrayTwo = new Object[3];
+		        testArrayTwo[0] = "World";
+		        testArrayTwo[1] = "Hello";
+		        testArrayTwo[2] = "Test";
+		        list.setListData(testArrayTwo);
 			}
 		});
 		continueBtn.setBounds(439, 542, 222, 96); //size of button
 		contentPane.add(continueBtn);
 		
+		
+		//trying to get the list to work
+//		ArrayList<Document> inventoryList = new ArrayList<Document>();
+//		try
+//    	{
+//	    	String credentials = "mongodb+srv://user:user@cluster0.ho2gy.mongodb.net/myFirstDatabase?retryWrites=true&w=majority"; //connects to database
+//	        MongoClient client = MongoClients.create(credentials); //logged into the user in the database
+//	        //System.out.println("Created Mongo Connection successfully"); 
+//	        MongoDatabase db = client.getDatabase("SEProject"); //selects correct project
+//	        MongoCollection col = db.getCollection( "Inventory"); //selects which collection
+//
+//	        System.out.println(col.find());
+//	        
+//	        Object[] testArray = new Object[4]; 
+//	        testArray[0] = "Hello";
+//	        testArray[1] = "World";
+//	        list.setListData(testArray);
+//	        
+//	        FindIterable<Document> iterDoc = col.find(); //grabs all documents from database
+//	        int i = 1;
+//	        // Getting the iterator
+//	        System.out.println("Listing All Mongo Documents");
+//	        Iterator it = iterDoc.iterator(); //goes to next fetched item
+//	        while (it.hasNext()) 
+//	        {
+//	            System.out.println(it.next());
+//	            testArray[i - 1] = 
+//	            i++;
+//	        } 
+//	        list.setListData(testArray);
+//    	}catch (Exception e) //log in unsuccessful
+//    	{
+//    		System.out.println("Incorrect credentails.");
+//    	}
 	}
 	
 	
 	//add item use case
 	public static void addItem()
 	{
-		String Response = JOptionPane.showInputDialog("What item is being added?");
-		System.out.println(Response); //testing user response
+		String itemName = "";
+		itemName = JOptionPane.showInputDialog("What item is being added?");
+		System.out.println(itemName); //testing user response
 		
-		String answer = JOptionPane.showInputDialog("How many of the item would you like to add?");
-		int i = Integer.parseInt(answer); //turning the string input into an int
+		String quantity = JOptionPane.showInputDialog("How many of the item would you like to add?");
+		int i = Integer.parseInt(quantity); //turning the string input into an int
 		System.out.println(i); //testing parse
 		
-		//two options for outputing to the user
-		systemOutLbl.setText(answer + " have been added to the inventory");
+		//TODO two options for outputing to the user
+		systemOutLbl.setText(quantity + " " + itemName + " has been added to the inventory.");
 		//JOptionPane.showMessageDialog(frame, answer + " " + "have been added.");
 	}
+	
+	
+	
+	
 	
 	
 	//remove item use case
 	public static void removeItem()
 	{
-		String Response = JOptionPane.showInputDialog("How many would you like to remove");
-		System.out.println(Response); //test
+		String response = JOptionPane.showInputDialog("What item is being removed?");
+		System.out.println(response); //testing user response
 		
 		String answer = JOptionPane.showInputDialog("How many of the item would you like to remove?");
 		int i = Integer.parseInt(answer); //turning the string input into an int
 		System.out.println(i); //testing parse
+		
+		systemOutLbl.setText(answer + " " + response + " has been removed from the inventory.");
 	}
 	
 	

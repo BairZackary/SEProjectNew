@@ -1,3 +1,5 @@
+//TODO finished other than create account option
+	//extra, probably will not get to this
 //written by jorge and ray
 
 
@@ -101,8 +103,8 @@ public class loginPage implements ActionListener
 	        
 	        //closing log in page and opening home page
 	        frame.setVisible(false);
-	        //homePage homeGui = new homePage(); //creates homePage.java
-	        //homeGui.display(); //calls homePage.java
+	        homePage homeGui = new homePage(); //creates homePage.java
+	        homeGui.display(); //calls homePage.java
 	    }
     	catch (Exception e1) //log in unsuccessful
     	{
