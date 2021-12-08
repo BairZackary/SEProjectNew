@@ -90,6 +90,7 @@ public class homePage extends JFrame {
 				Answer = JOptionPane.showInputDialog("How many would you like to add?");
 				//System.out.println(Response);
 				int i = Integer.parseInt(Answer);
+				// MongoDB code to add that many of the item
 				System.out.println(i);
 				
 			}
@@ -103,7 +104,13 @@ public class homePage extends JFrame {
 			//when mouse is clicked
 			public void mouseClicked(MouseEvent e) {
 				
-				JOptionPane.showInputDialog("How many would you like to remove?");
+				String Response;
+				Response = JOptionPane.showInputDialog("Which item would you like to remove?");
+				
+				String Answer;
+				Answer = JOptionPane.showInputDialog("How many would you like to remove?");
+				// MongoDB code to remove number of item
+				
 			}
 		});
 		removeItemBtn.setBounds(8, 107, 386, 52);
@@ -114,6 +121,10 @@ public class homePage extends JFrame {
 			@Override
 			//when button is clicked
 			public void mouseClicked(MouseEvent e) {
+				
+				String Response;
+				Response = JOptionPane.showInputDialog("Which item would you like to search for?");
+				// MongoDB code to search for item
 			}
 		});
 		searchBtn.setBounds(10, 170, 384, 52); //button size
