@@ -17,10 +17,20 @@ import javax.swing.JLabel;
 import javax.swing.JButton;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
+
 import javax.swing.SwingConstants;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.border.LineBorder;
+
+import org.bson.Document;
+
+import com.mongodb.client.MongoClient;
+import com.mongodb.client.MongoClients;
+import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoDatabase;
+
 import java.awt.Color;
 import java.awt.Component;
 
@@ -78,6 +88,8 @@ public class homePage extends JFrame {
 		listLbl.setBounds(699, 15, 283, 31); //size of label
 		contentPane.add(listLbl);
 		
+		//ArrayList test = new ArrayList(Jbutton);
+		
 		/*final*/ JButton addItemBtn = new JButton("Add Item");
 		addItemBtn.addMouseListener(new MouseAdapter() {
 			@Override
@@ -85,24 +97,35 @@ public class homePage extends JFrame {
 			
 			public void mouseClicked(MouseEvent e) {
 				
-				String Response;
-				Response = JOptionPane.showInputDialog("for which item");
-
-				
+				String Response = "";
+				Response = JOptionPane.showInputDialog("for which item");				
 				System.out.println(Response);
 				
 			
-				String answer;	
-				answer = JOptionPane.showInputDialog("How many would you like to add");
+				String amount = "";
+				if(!Response.equals("")) {
+				amount = JOptionPane.showInputDialog("How many would you like to add");
 			 
-				int i = Integer.parseInt(answer);
+				int i = Integer.parseInt(amount);
 				System.out.println(i);
+				}
+				String credentials = "mongodb+srv://user:user@cluster0.ho2gy.mongodb.net/myFirstDatabase?retryWrites=true&w=majority"; //connects to database
+                MongoClient client = MongoClients.create(credentials); //logged into the user in the database
+                MongoDatabase db = client.getDatabase("SEProject"); //selects correct project
+                MongoCollection col = db.getCollection( "Inventory");
+                System.out.println("Database Successfuly retrieved");
+                System.out.println("Collection Successfuly created");
+            //Insert record into collection by creating a document now you will be able to see the database
+                Document doc =new Document("name","New Inventory Item");
+                doc.append("id",10);
+                doc.append("Amount in inventory",100);
+                doc.append("Priority", "1");
+            //This line of code is what acutely pushes the document to the cloud
+                col.insertOne(doc);
+                System.out.println("Insert is completed");
 				
-				
-				//String confirmation;
-				//confirmation = JOptionPane.showInputDialog(i + " " +  Response + "were added");
-				//systemOutLbl(userTextField(i + Response + "were added"));
-				JOptionPane.showMessageDialog(frame, answer +" "+ Response +" added");
+				//system responds to items added
+				JOptionPane.showMessageDialog(frame, amount +" "+ Response +" Has been added");
 				
 				}
 
@@ -127,8 +150,13 @@ public class homePage extends JFrame {
 				int i = Integer.parseInt(answer1);
 				
 				System.out.println(i);
+				
+				JOptionPane.showMessageDialog(frame,  answer1+ " " + Response1 + " Has been removed");
+				
 			}
+			
 		});
+		
 		removeItemBtn.setBounds(8, 107, 386, 52);
 		contentPane.add(removeItemBtn);
 		
@@ -158,7 +186,7 @@ public class homePage extends JFrame {
 		
 		JButton continueBtn = new JButton("Enter");
 		continueBtn.addActionListener(new ActionListener() {
-			//button clicke action 
+			//button clicked action 
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
@@ -170,10 +198,10 @@ public class homePage extends JFrame {
 		continueBtn.setBounds(439, 542, 222, 96); //size of button
 		contentPane.add(continueBtn);
 		
-		JLabel lblNewLabel = new JLabel("User Input");
-		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel.setBounds(10, 485, 386, 14); //size of label
-		contentPane.add(lblNewLabel);
+		//JLabel lblNewLabel = new JLabel("User Input");
+		//lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		//lblNewLabel.setBounds(10, 485, 386, 14); //size of label
+		//contentPane.add(lblNewLabel);
 	}
 
 	
