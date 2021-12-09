@@ -26,10 +26,13 @@ import javax.swing.border.LineBorder;
 
 import org.bson.Document;
 
+import com.mongodb.BasicDBObject;
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoCursor;
 import com.mongodb.client.MongoDatabase;
+import com.mongodb.client.model.Filters;
 
 import java.awt.Color;
 import java.awt.Component;
@@ -123,6 +126,13 @@ public class homePage extends JFrame {
             //This line of code is what acutely pushes the document to the cloud
                 col.insertOne(doc);
                 System.out.println("Insert is completed");
+                
+//            //increments count
+//                db.posts.update("title: " + "Post Two") {
+//                	$inc: {
+//                		likes: (5);
+//                	}
+//                	})
 				
 				//system responds to items added
 				JOptionPane.showMessageDialog(frame, amount +" "+ Response +" Has been added");
@@ -140,16 +150,30 @@ public class homePage extends JFrame {
 			//when mouse is clicked
 			public void mouseClicked(MouseEvent e) {
 				
-				String Response1;
+				String Response1 = "";
 				Response1 = JOptionPane.showInputDialog("For which item");
 				System.out.println(Response1);
 				
 				
-				String answer1;
+				String answer1 = "";
+				if(!Response1.equals("")) {
 				answer1 = JOptionPane.showInputDialog("How many would you like to remove");
 				int i = Integer.parseInt(answer1);
 				
 				System.out.println(i);
+				}
+				String credentials = "mongodb+srv://user:user@cluster0.ho2gy.mongodb.net/myFirstDatabase?retryWrites=true&w=majority"; //connects to database
+                MongoClient client = MongoClients.create(credentials); //logged into the user in the database
+                MongoDatabase db = client.getDatabase("SEProject"); //selects correct project
+                MongoCollection col = db.getCollection( "Inventory");
+                System.out.println("Database Successfuly retrieved");
+                System.out.println("Collection Successfuly created");
+           
+              //Deleting a document from a collection 
+                col.deleteOne(Filters.eq("id", 101)); 
+                System.out.println("Document deleted successfully...");
+                System.out.println(); 
+               
 				
 				JOptionPane.showMessageDialog(frame,  answer1+ " " + Response1 + " Has been removed");
 				
@@ -165,9 +189,27 @@ public class homePage extends JFrame {
 			@Override
 			//when button is clicked
 			public void mouseClicked(MouseEvent e) {
-				String search1;
-				search1 = JOptionPane.showInputDialog("what item are you looking for");
-				System.out.println(search1);
+//				String search1;
+//				search1 = JOptionPane.showInputDialog("what item are you looking for");
+//				System.out.println(search1);
+				
+				String name = "";
+				name = JOptionPane.showInputDialog("for which item");				
+				System.out.println(name);
+				
+				//specific document retrieving in a collection
+		        BasicDBObject searchQuery = new BasicDBObject();
+		        searchQuery.put("itemName", name);
+		        
+		        System.out.println("Retrieving specific Mongo Document");
+		        String credentials = "mongodb+srv://user:user@cluster0.ho2gy.mongodb.net/myFirstDatabase?retryWrites=true&w=majority"; //connects to database
+                MongoClient client = MongoClients.create(credentials); //logged into the user in the database
+                MongoDatabase db = client.getDatabase("SEProject"); //selects correct project
+                MongoCollection col = db.getCollection( "Inventory");
+				MongoCursor<Document> cursor = col.find(searchQuery).iterator();
+		        while (cursor.hasNext()) {
+		            System.out.println(cursor.next());
+		        }
 			}
 		});
 		searchBtn.setBounds(10, 170, 384, 52); //button size
