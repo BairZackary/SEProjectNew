@@ -6,6 +6,7 @@
 
 //imports for swing
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -18,34 +19,52 @@ import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
-import java.awt.Component;
 
-public class homePage extends JFrame {
+import org.bson.Document;
 
+import com.mongodb.client.MongoClient;
+import com.mongodb.client.MongoClients;
+import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoDatabase;
+
+public class homePage extends JFrame 
+{
+	//swing objects
 	private JPanel contentPane;
-	private JTextField userTextField;
 	protected Component frame;
+	//private JTextField userTextField;
+	
+	JList list = new JList();
+	JLabel inventoryManagerLbl = new JLabel("Inventory Manager");
+	JLabel listLbl = new JLabel("Inventory List");
+	JButton addItemBtn = new JButton("Add Item");
+	JButton removeItemBtn = new JButton("Remove Item");
+	JButton searchBtn = new JButton("Search");
+	static //static //JTextField userTextField = new JTextField();
 
-	/**
-	 * Launch the application.
-	 */
+	JLabel systemOutLbl = new JLabel("System Output");
+	JButton continueBtn = new JButton("Enter");
+	//JLabel userInput = new JLabel("User Input");
 
+	
 	public static void main(String[] args) {
 	
 	}
 	
-	public void display() {
+	
+	//called by DemoOne.java
+	public void display() 
+	{
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
 					homePage frame = new homePage();
-					frame.setVisible(true); //TRUE makes page visable
+					frame.setVisible(true); //TRUE makes page visible
 				} catch (Exception e) {
-					e.printStackTrace();
+					e.printStackTrace(); //prints any errors
 				}
 			}
 		});}
@@ -54,114 +73,200 @@ public class homePage extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public homePage() {
-		
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	public homePage() 
+	{
+		//frame configuration
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); //what happens when closed
 		setBounds(100, 100, 1028, 720); //size of page
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		JList list = new JList();
-		list.setBorder(new LineBorder(new Color(0, 0, 0)));
+		//inventory list
+		list.setBorder(new LineBorder(new Color(0, 0, 0))); //border color
 		list.setBounds(699, 57, 283, 581); //size of inventory list
 		contentPane.add(list);
-		
-		JLabel inventoryManagerLbl = new JLabel("Inventory Manager");
-		inventoryManagerLbl.setHorizontalAlignment(SwingConstants.CENTER);
+		//inventory label
+		inventoryManagerLbl.setHorizontalAlignment(SwingConstants.CENTER); //centers text within object
 		inventoryManagerLbl.setBounds(10, 15, 386, 14); //size of label
 		contentPane.add(inventoryManagerLbl);
-		
-		JLabel listLbl = new JLabel("Inventory List");
 		listLbl.setHorizontalAlignment(SwingConstants.CENTER);
 		listLbl.setBounds(699, 15, 283, 31); //size of label
 		contentPane.add(listLbl);
-		
+
+		//add item
 		JButton addItemBtn = new JButton("Add Item");
-		addItemBtn.addMouseListener(new MouseAdapter() {
+		addItemBtn.addMouseListener(new MouseAdapter() 
+		{
 			@Override
 			//when mouse is clicked
-			public void mouseClicked(MouseEvent e) {
-				
-				String Response;
-				Response = JOptionPane.showInputDialog("Which item would you like to add?");
-				System.out.println(Response);
-				
-				String Answer;
-				Answer = JOptionPane.showInputDialog("How many would you like to add?");
-				//System.out.println(Response);
-				int i = Integer.parseInt(Answer);
-				// MongoDB code to add that many of the item
-				System.out.println(i);
-				
-				JOptionPane.showMessageDialog(frame, Answer + " " + Response + " added to inventory.");
-			
-				
+			public void mouseClicked(MouseEvent e) 
+			{
+				addItem();
 			}
 		});
 		addItemBtn.setBounds(8, 54, 386, 42);
 		contentPane.add(addItemBtn);
 		
-		JButton removeItemBtn = new JButton("Remove Item");
+		//remove item
 		removeItemBtn.addMouseListener(new MouseAdapter() {
 			@Override
 			//when mouse is clicked
-			public void mouseClicked(MouseEvent e) {
-				
-				String Response;
-				Response = JOptionPane.showInputDialog("Which item would you like to remove?");
-				
-				String Answer;
-				Answer = JOptionPane.showInputDialog("How many would you like to remove?");
-				// MongoDB code to remove number of item
-				JOptionPane.showMessageDialog(frame, Answer + " " + Response + " removed from inventory.");
+			public void mouseClicked(MouseEvent e) 
+			{
+				removeItem();
 			}
 		});
 		removeItemBtn.setBounds(8, 107, 386, 52);
 		contentPane.add(removeItemBtn);
 		
-		JButton searchBtn = new JButton("Search");
+		//search
 		searchBtn.addMouseListener(new MouseAdapter() {
 			@Override
 			//when button is clicked
-			public void mouseClicked(MouseEvent e) {
-				
-				String Response;
-				Response = JOptionPane.showInputDialog("Which item would you like to search for?");
-				// MongoDB code to search for item
+			public void mouseClicked(MouseEvent e) 
+			{
+				search();
 			}
 		});
 		searchBtn.setBounds(10, 170, 384, 52); //button size
 		contentPane.add(searchBtn);
 		
-		userTextField = new JTextField();
-		userTextField.setBounds(10, 510, 384, 128); //text field size
-		contentPane.add(userTextField);
-		userTextField.setColumns(10);
+		//userTextField.setBounds(10, 510, 384, 128); //text field size
+		//contentPane.add(userTextField);
+		//userTextField.setColumns(10);
 		
-		JLabel systemOutLbl = new JLabel("System Output");
+		
+		//final JLabel systemOutLbl = new JLabel("System Output");
 		systemOutLbl.setHorizontalAlignment(SwingConstants.CENTER);
-		systemOutLbl.setBounds(439, 432, 222, 67); //label size
+		systemOutLbl.setBounds(10, 510, 384, 128); //label size
+		systemOutLbl.setText("Test");
 		contentPane.add(systemOutLbl);
 		
-		JButton continueBtn = new JButton("Enter");
+		//enter button
 		continueBtn.addActionListener(new ActionListener() {
-			//nutton clicked action
+			//button clicked action
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
 		continueBtn.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				Object[] testArrayTwo = new Object[3];
+		        testArrayTwo[0] = "World";
+		        testArrayTwo[1] = "Hello";
+		        testArrayTwo[2] = "Test";
+		        list.setListData(testArrayTwo);
 			}
 		});
 		continueBtn.setBounds(439, 542, 222, 96); //size of button
 		contentPane.add(continueBtn);
 		
-		JLabel lblNewLabel = new JLabel("User Input");
-		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel.setBounds(10, 485, 386, 14); //size of label
-		contentPane.add(lblNewLabel);
+		
+		//trying to get the list to work
+//		ArrayList<Document> inventoryList = new ArrayList<Document>();
+//		try
+//    	{
+//	    	String credentials = "mongodb+srv://user:user@cluster0.ho2gy.mongodb.net/myFirstDatabase?retryWrites=true&w=majority"; //connects to database
+//	        MongoClient client = MongoClients.create(credentials); //logged into the user in the database
+//	        //System.out.println("Created Mongo Connection successfully"); 
+//	        MongoDatabase db = client.getDatabase("SEProject"); //selects correct project
+//	        MongoCollection col = db.getCollection( "Inventory"); //selects which collection
+//
+//	        System.out.println(col.find());
+//	        
+//	        Object[] testArray = new Object[4]; 
+//	        testArray[0] = "Hello";
+//	        testArray[1] = "World";
+//	        list.setListData(testArray);
+//	        
+//	        FindIterable<Document> iterDoc = col.find(); //grabs all documents from database
+//	        int i = 1;
+//	        // Getting the iterator
+//	        System.out.println("Listing All Mongo Documents");
+//	        Iterator it = iterDoc.iterator(); //goes to next fetched item
+//	        while (it.hasNext()) 
+//	        {
+//	            System.out.println(it.next());
+//	            testArray[i - 1] = 
+//	            i++;
+//	        } 
+//	        list.setListData(testArray);
+//    	}catch (Exception e) //log in unsuccessful
+//    	{
+//    		System.out.println("Incorrect credentials.");
+//    	}
+	}
+	
+	
+	//add item use case
+	public void addItem()
+	{
+		String itemName = "";
+		itemName = JOptionPane.showInputDialog("What item is being added?");
+		System.out.println(itemName); //testing user response
+		
+		String quantity = JOptionPane.showInputDialog("How many of the item would you like to add?");
+		int i = Integer.parseInt(quantity); //turning the string input into an int
+		System.out.println(i); //testing parse
+		
+		//TODO two options for outputting to the user
+		//systemOutLbl.setText(quantity + " " + itemName + " has been added to the inventory.");
+		JOptionPane.showMessageDialog(frame, quantity + " " + itemName + " have been added.");
+		
+		String credentials = "mongodb+srv://user:user@cluster0.ho2gy.mongodb.net/myFirstDatabase?retryWrites=true&w=majority"; //connects to database
+        MongoClient client = MongoClients.create(credentials); //logged into the user in the database
+        MongoDatabase db = client.getDatabase("SEProject"); //selects correct project
+        MongoCollection col = db.getCollection( "Inventory");
+//        System.out.println("Database Successfuly retrieved");
+//        System.out.println("Collection Successfuly created");
+//    //Insert record into collection by creating a document now you will be able to see the database
+        Document doc =new Document("name",itemName);
+        doc.append("id",7);
+        doc.append("Amount in inventory",quantity);
+//    //This line of code is what acutely pushes the document to the cloud
+        col.insertOne(doc);
+//        System.out.println("Insert is completed");
+	}
+	
+	
+	
+	
+	
+	
+	//remove item use case
+	public void removeItem()
+	{
+		String response = JOptionPane.showInputDialog("What item is being removed?");
+		System.out.println(response); //testing user response
+		
+		String answer = JOptionPane.showInputDialog("How many of the item would you like to remove?");
+		int i = Integer.parseInt(answer); //turning the string input into an int
+		System.out.println(i); //testing parse
+		
+		systemOutLbl.setText(answer + " " + response + " has been removed from the inventory.");
+	}
+	
+	
+	//sort inventory use case
+	public void sortInventory()
+	{
+		
+	}
+	
+	
+	//search use case
+	public void search()
+	{
+		String Response = JOptionPane.showInputDialog("what item are you looking for");
+		System.out.println(Response);
+	}
+	
+	
+	//update inventory use case
+	public void updateInventory()
+	{
+		
 	}
 }
