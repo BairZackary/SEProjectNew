@@ -261,6 +261,21 @@ public class homePage extends JFrame
 	//remove item use case
 	public static void removeItem()
 	{
+//		while (true)
+//		{
+//			try
+//			{
+//				//everything would be in here
+//				//at the end add:
+//				//break
+//			}
+//			catch (Exception e)
+//			{
+//				//tell the user they had an input error
+//				//print stack error
+//			}
+//		}
+		
 		//getting what to remove
 		String  itemName = JOptionPane.showInputDialog("What item is being removed?");
 		System.out.println(itemName); //testing user response
@@ -279,9 +294,13 @@ public class homePage extends JFrame
 	    BasicDBObject searchQuery = new BasicDBObject(); //used to query for items
 	    searchQuery.put("itemName", itemName); //queries for the item name
 	    MongoCursor<Document> cursor = col.find(searchQuery).iterator();
+	    //TODO use a try catch to determine that item does not exist
         if(!cursor.hasNext()) //item not found
         { 
-        	System.out.println("The item does not exist");
+        	JOptionPane.showMessageDialog(frame, "Your selected item does not exist.");
+        	
+        	//OLDER CODE
+        	//System.out.println("The item does not exist"); //gives feedback on if the item exists
 //        	Document doc =new Document("itemName",itemName);//creates a new item with an itemName
 //            //doc.append("id",7);
 //            doc.append("quantity",i); //adds a quantity to the item and adds the number being added
@@ -292,7 +311,14 @@ public class homePage extends JFrame
         } 
         else //item exists 
         { 
-        	System.out.println("The item exists");
+        	//System.out.println("The negative is: " + (i * -1)); //making sure the number will come out negative
+        	int removedAmount  = Math.abs(i) * -1; //makes the number entered into a negative
+        	col.updateOne(Filters.eq("itemName", itemName ), Updates.inc("quantity", removedAmount));
+        	//TODO we could use the set method rather than the inc function
+        	//TODO use try catch to make sure they give correct inputs
+        	
+        	//OLDER CODE
+        	//System.out.println("The item exists");
 //          col.updateOne(Filters.eq("itemName", itemName ), Updates.inc("quantity", i));
 //            System.out.println("increment complete");
 //            //TODO make sure filters and updates went to correct place
