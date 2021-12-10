@@ -46,6 +46,8 @@ import com.mongodb.client.model.Filters;
 import com.mongodb.client.model.Updates;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
+
+import org.bson.BsonDocument;
 import org.bson.Document;
 
 
@@ -154,6 +156,9 @@ public class homePage extends JFrame
 		searchBtn.setBounds(60, 284, 137, 69); //button size
 		contentPane.add(searchBtn);
 		
+		
+		//update the list
+		updateList();
 	}
 	
 	
@@ -197,9 +202,11 @@ public class homePage extends JFrame
         { 
           col.updateOne(Filters.eq("itemName", itemName ), Updates.inc("quantity", i));
             System.out.println("increment complete");
-            //TODO make sure filters and updates went to correct place
-            
+            //TODO make sure filters and updates went to correct place    
         }
+        
+        //update the list
+        updateList();
 	}
 	
 	
@@ -244,14 +251,6 @@ public class homePage extends JFrame
         { 
         	JOptionPane.showMessageDialog(frame, "Your selected item does not exist.");
         	
-        	//OLDER CODE
-        	//System.out.println("The item does not exist"); //gives feedback on if the item exists
-//        	Document doc =new Document("itemName",itemName);//creates a new item with an itemName
-//            //doc.append("id",7);
-//            doc.append("quantity",i); //adds a quantity to the item and adds the number being added
-//        	//This line of code is what acutely pushes the document to the cloud
-//            col.insertOne(doc); //pushes the item to the database
-//            System.out.println("Insert is completed");
           
         } 
         else //item exists 
@@ -261,14 +260,11 @@ public class homePage extends JFrame
         	col.updateOne(Filters.eq("itemName", itemName ), Updates.inc("quantity", removedAmount));
         	//TODO we could use the set method rather than the inc function
         	//TODO use try catch to make sure they give correct inputs
-        	
-        	//OLDER CODE
-        	//System.out.println("The item exists");
-//          col.updateOne(Filters.eq("itemName", itemName ), Updates.inc("quantity", i));
-//            System.out.println("increment complete");
-//            //TODO make sure filters and updates went to correct place
             
         }
+        
+        //update the list
+        updateList();
 	}
 	
 	
@@ -318,63 +314,46 @@ public class homePage extends JFrame
 	
 	/**
 	 * Updates list
-	 * Ideas:
-	 * we can print to the consol
-	 * search for the item
-	 * then parse the list to only give us what we want to be displayed
-	 * iterater gives the id, itemName, quantity - everything
 	 */
 	public static void updateList()
 	{
-		//ArrayList<Document> inventoryList = new ArrayList<Document>();
-		try
-    	{
-	    	String credentials = "mongodb+srv://user:user@cluster0.ho2gy.mongodb.net/myFirstDatabase?retryWrites=true&w=majority"; //connects to database
-	        MongoClient client = MongoClients.create(credentials); //logged into the user in the database
-	        //System.out.println("Created Mongo Connection successfully"); 
-	        MongoDatabase db = client.getDatabase("SEProject"); //selects correct project
-	        MongoCollection col = db.getCollection( "Inventory"); //selects which collection
-
-	        System.out.println(col.find());
-	        
-//	        Object[] testArray = new Object[4]; 
-//	        testArray[0] = "Hello";
-//	        testArray[1] = "World";
-//	        list.setListData(testArray);
-	        
-	        FindIterable<Document> iterDoc = col.find(); //grabs all documents from database
-	        //System.out.println(iterDoc.getClass().getSimpleName());
-	        int i = 1;
-//	        // Getting the iterator
-//	        System.out.println("Listing All Mongo Documents");
-	        Iterator it = iterDoc.iterator(); //goes to next fetched item
-	        while (it.hasNext()) 
-	        {
-	        	//col.find(Filters.eq("itemName"), "tacos");
-	        	System.out.println(col.find(Filters.eq("quantity")) + " " + i);
-	        	//System.out.println(col.get("itemName");
-	        	it.next();
-	        	//String test = col.get
-	        	
-	        	
-	        	//System.out.println(it.next());
-	        	
-	        	//DBObject dbo = it.next();
-	        	//it.next();
-	        	
-	        	//String test = it.next();
-	        	//System.out.println(it.next());
-	            
-	            //System.out.println(it.next().get("itemName"));
-	            //testArray[i - 1] = 
-	            i++;
-	        } 
-	        //list.setListData(testArray);
-    	}catch (Exception e) //log in unsuccessful
-    	{
-    		System.out.println("Incorrect credentials.");
-    		e.printStackTrace(); //I think this will print the error to the console
-    	}
+		//Putting document data into an ArrayList
+	    String[] inventoryList = new String[100];
+	    try
+	      {
+	    	//logging into mongo
+	    	  String credentials = "mongodb+srv://user:user@cluster0.ho2gy.mongodb.net/myFirstDatabase?retryWrites=true&w=majority"; //connects to database
+	    	  MongoClient client = MongoClients.create(credentials); //logged into the user in the database
+	          System.out.println("Created Mongo Connection successfully"); 
+	          MongoDatabase db = client.getDatabase("SEProject"); //selects correct project
+	          MongoCollection col = db.getCollection( "Inventory"); //selects which collection
+	          //System.out.println(col.find()); //prints out all documents
+	          
+	          //grabbing all documents
+	          //Object[] testArray = new Object[4]; //temp array
+	          FindIterable<Document> iterDoc = col.find(); //grabs all documents from database
+	          int i = 1;
+	          // Getting the iterator
+	          System.out.println("Listing All Mongo Documents");
+	          Iterator it = iterDoc.iterator(); //goes to next fetched item
+	          while (it.hasNext()) //if there is another item
+	          {
+	        	  //grabbing important information from the document
+	        	  Document doc = (Document)it.next(); //goes to next document
+	        	  String itemDescription = doc.getString("itemName") + "    " + doc.getInteger("quantity");
+	        	  inventoryList[i - 1] = itemDescription; //adds the important information to the inventoryList
+	        	  i++;
+	          } 
+	      }
+	    catch (Exception e) //log in unsuccessful
+	      {
+	        System.out.println("Error");
+	        e.printStackTrace(); //prints error to the console
+	      }
+		
+	    list.setListData(inventoryList); //updates the list
+		
+		
 	}
 	
 }

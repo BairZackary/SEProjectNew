@@ -16,11 +16,14 @@ public class DemoOne
 {
 	public static void main(String[] args) 
 	{
-		//loginPage logGui = new loginPage(); //creates a loginPage.java object
-		//logGui.display(); //displays log in page
+		//full functionality
+		loginPage logGui = new loginPage(); //creates a loginPage.java object
+		logGui.display(); //displays log in page
 		
-		homePage homeGUI = new homePage(); //creates a homePage.java object
-		//homeGUI.display(); //displays the home page
-		homeGUI.updateList();
+		
+		//testing
+//		homePage homeGUI = new homePage(); //creates a homePage.java object
+//		homeGUI.display(); //displays the home page
+//		homeGUI.updateList();
     }
 }
