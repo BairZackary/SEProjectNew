@@ -33,6 +33,7 @@ import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoCursor;
 import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.Filters;
+import com.mongodb.client.model.Updates;
 
 import java.awt.Color;
 import java.awt.Component;
@@ -70,7 +71,7 @@ public class homePage extends JFrame {
 	public homePage() {
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 1028, 720); //size of page
+		setBounds(100, 100, 596, 485); //size of page
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -78,22 +79,22 @@ public class homePage extends JFrame {
 		
 		JList list = new JList();
 		list.setBorder(new LineBorder(new Color(0, 0, 0)));
-		list.setBounds(699, 57, 283, 581); //size of inventory list
+		list.setBounds(267, 84, 250, 281); //size of inventory list
 		contentPane.add(list);
 		
 		JLabel inventoryManagerLbl = new JLabel("Inventory Manager");
 		inventoryManagerLbl.setHorizontalAlignment(SwingConstants.CENTER);
-		inventoryManagerLbl.setBounds(10, 15, 386, 14); //size of label
+		inventoryManagerLbl.setBounds(71, 38, 110, 23); //size of label
 		contentPane.add(inventoryManagerLbl);
 		
 		JLabel listLbl = new JLabel("Inventory List");
 		listLbl.setHorizontalAlignment(SwingConstants.CENTER);
-		listLbl.setBounds(699, 15, 283, 31); //size of label
+		listLbl.setBounds(365, 59, 127, 14); //size of label
 		contentPane.add(listLbl);
 		
-		//ArrayList test = new ArrayList(Jbutton);
 		
-		/*final*/ JButton addItemBtn = new JButton("Add Item");
+	//ADD ITEM BUTTON	
+		JButton addItemBtn = new JButton("Add Item");
 		addItemBtn.addMouseListener(new MouseAdapter() {
 			@Override
 			//when mouse is clicked
@@ -103,46 +104,51 @@ public class homePage extends JFrame {
 				String Response = "";
 				Response = JOptionPane.showInputDialog("for which item");				
 				System.out.println(Response);
-				
 			
 				String amount = "";
 				if(!Response.equals("")) {
-				amount = JOptionPane.showInputDialog("How many would you like to add");
-			 
-				int i = Integer.parseInt(amount);
-				System.out.println(i);
+					amount = JOptionPane.showInputDialog("How many would you like to add");
+					int i = Integer.parseInt(amount);
+					System.out.println(i);
 				}
+				int i = Integer.parseInt(amount);
+	
 				String credentials = "mongodb+srv://user:user@cluster0.ho2gy.mongodb.net/myFirstDatabase?retryWrites=true&w=majority"; //connects to database
                 MongoClient client = MongoClients.create(credentials); //logged into the user in the database
                 MongoDatabase db = client.getDatabase("SEProject"); //selects correct project
                 MongoCollection col = db.getCollection( "Inventory");
                 System.out.println("Database Successfuly retrieved");
                 System.out.println("Collection Successfuly created");
-            //Insert record into collection by creating a document now you will be able to see the database
-                Document doc =new Document("name","New Inventory Item");
-                doc.append("id",10);
-                doc.append("Amount in inventory",100);
-                doc.append("Priority", "1");
-            //This line of code is what acutely pushes the document to the cloud
-                col.insertOne(doc);
-                System.out.println("Insert is completed");
-                
-//            //increments count
-//                db.posts.update("title: " + "Post Two") {
-//                	$inc: {
-//                		likes: (5);
-//                	}
-//                	})
-				
-				//system responds to items added
+            
+		        BasicDBObject searchQuery = new BasicDBObject();
+		        searchQuery.put("itemName", Response);
+		      
+                MongoCursor<Document> cursor = col.find(searchQuery).iterator();
+		        
+				 if(!cursor.hasNext() ) {
+					 Document doc =new Document("itemName",Response);
+		                doc.append("quantity",i);
+		                col.insertOne(doc);
+			       
+			        }else{
+		            
+			        	col.updateOne(Filters.eq("itemName", Response ), Updates.inc("quantity", i));
+			            System.out.println("increment complete");
+		        }
+                    System.out.println("Insert is completed");
+
 				JOptionPane.showMessageDialog(frame, amount +" "+ Response +" Has been added");
 				
 				}
 
 			
 		});
-		addItemBtn.setBounds(8, 54, 386, 42);
+		
+		addItemBtn.setBounds(60, 84, 137, 58);
 		contentPane.add(addItemBtn);
+		
+		
+	//REMOVE ITEM BUTTON
 		
 		JButton removeItemBtn = new JButton("Remove Item");
 		removeItemBtn.addMouseListener(new MouseAdapter() {
@@ -157,11 +163,12 @@ public class homePage extends JFrame {
 				
 				String answer1 = "";
 				if(!Response1.equals("")) {
-				answer1 = JOptionPane.showInputDialog("How many would you like to remove");
-				int i = Integer.parseInt(answer1);
+					answer1 = JOptionPane.showInputDialog("How many would you like to remove");
+					int i = Integer.parseInt(answer1);
 				
-				System.out.println(i);
+					System.out.println(i);
 				}
+				
 				String credentials = "mongodb+srv://user:user@cluster0.ho2gy.mongodb.net/myFirstDatabase?retryWrites=true&w=majority"; //connects to database
                 MongoClient client = MongoClients.create(credentials); //logged into the user in the database
                 MongoDatabase db = client.getDatabase("SEProject"); //selects correct project
@@ -181,21 +188,20 @@ public class homePage extends JFrame {
 			
 		});
 		
-		removeItemBtn.setBounds(8, 107, 386, 52);
+		removeItemBtn.setBounds(60, 185, 137, 58);
 		contentPane.add(removeItemBtn);
 		
+		
+	//SEARCH BUTTON	
 		JButton searchBtn = new JButton("Search");
 		searchBtn.addMouseListener(new MouseAdapter() {
 			@Override
 			//when button is clicked
 			public void mouseClicked(MouseEvent e) {
-//				String search1;
-//				search1 = JOptionPane.showInputDialog("what item are you looking for");
-//				System.out.println(search1);
-				
+
 				String name = "";
 				name = JOptionPane.showInputDialog("for which item");				
-				System.out.println(name);
+				
 				
 				//specific document retrieving in a collection
 		        BasicDBObject searchQuery = new BasicDBObject();
@@ -206,44 +212,22 @@ public class homePage extends JFrame {
                 MongoClient client = MongoClients.create(credentials); //logged into the user in the database
                 MongoDatabase db = client.getDatabase("SEProject"); //selects correct project
                 MongoCollection col = db.getCollection( "Inventory");
-				MongoCursor<Document> cursor = col.find(searchQuery).iterator();
-		        while (cursor.hasNext()) {
+               
+                MongoCursor<Document> cursor = col.find(searchQuery).iterator();
+		        
+				 if(!cursor.hasNext() ) {
+			        	System.out.println("Item does not exist");
+			        }while (cursor.hasNext()) {
 		            System.out.println(cursor.next());
+		        
 		        }
+
 			}
 		});
-		searchBtn.setBounds(10, 170, 384, 52); //button size
+		searchBtn.setBounds(60, 284, 137, 69); //button size
 		contentPane.add(searchBtn);
 		
-		userTextField = new JTextField();
-		userTextField.setBounds(10, 510, 384, 128); //text field size
-		contentPane.add(userTextField);
-		userTextField.setColumns(10);
-		
-		
-		JLabel systemOutLbl = new JLabel("System Output");
-		systemOutLbl.setHorizontalAlignment(SwingConstants.CENTER);
-		systemOutLbl.setBounds(439, 432, 222, 67); //label size
-		contentPane.add(systemOutLbl);
-		
-		JButton continueBtn = new JButton("Enter");
-		continueBtn.addActionListener(new ActionListener() {
-			//button clicked action 
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
-		continueBtn.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-			}
-		});
-		continueBtn.setBounds(439, 542, 222, 96); //size of button
-		contentPane.add(continueBtn);
-		
-		//JLabel lblNewLabel = new JLabel("User Input");
-		//lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		//lblNewLabel.setBounds(10, 485, 386, 14); //size of label
-		//contentPane.add(lblNewLabel);
+
 	}
 
 	

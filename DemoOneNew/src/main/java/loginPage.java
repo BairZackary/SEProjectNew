@@ -40,7 +40,7 @@ public class loginPage implements ActionListener {
     }
     public static void display() {
         JPanel panel = new JPanel();
-        //JFrame frame = new JFrame();
+        
         frame.setSize(380,350); //the size of the log in page
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setVisible(true); //makes the GUI visable
