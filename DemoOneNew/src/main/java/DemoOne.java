@@ -19,9 +19,13 @@ public class DemoOne {
     public static void main(String[] args) {
     	
     
-    
-      loginPage logGui = new loginPage();
-      logGui.display();
+      // proper code
+      //loginPage logGui = new loginPage();
+      //logGui.display();
+    	
+    	// shortcut to test code.
+    	homePage homeGUI = new homePage();
+    	homeGUI.updateList();
       
     
                
