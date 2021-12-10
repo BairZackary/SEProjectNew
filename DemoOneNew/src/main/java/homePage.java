@@ -2,6 +2,7 @@
 //changes made by raymond
 //functions added by jorge
 //addItem() worked on by jordan, jorge, and raymond
+//updateList() worked on by zack and jordan
 
 
 //TODO some todos in the code
