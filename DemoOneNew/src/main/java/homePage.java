@@ -25,10 +25,14 @@ import javax.swing.border.LineBorder;
 
 import org.bson.Document;
 
+import com.mongodb.BasicDBObject;
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoCursor;
 import com.mongodb.client.MongoDatabase;
+import com.mongodb.client.model.Filters;
+import com.mongodb.client.model.Updates;
 
 public class homePage extends JFrame 
 {
@@ -221,13 +225,41 @@ public class homePage extends JFrame
         MongoCollection col = db.getCollection( "Inventory");
 //        System.out.println("Database Successfuly retrieved");
 //        System.out.println("Collection Successfuly created");
-//    //Insert record into collection by creating a document now you will be able to see the database
-        Document doc =new Document("name",itemName);
-        doc.append("id",7);
-        doc.append("Amount in inventory",quantity);
-//    //This line of code is what acutely pushes the document to the cloud
-        col.insertOne(doc);
-//        System.out.println("Insert is completed");
+        
+        BasicDBObject searchQuery = new BasicDBObject();
+		searchQuery.put("itemName", itemName);
+		
+        MongoCursor<Document> cursor = col.find(searchQuery).iterator();
+        
+        if(!cursor.hasNext()) {
+        	//System.out.println("Item does not exist");
+//          //Insert record into collection by creating a document now you will be able to see the database
+            Document doc =new Document("itemName",itemName);
+            doc.append("id",7);
+            doc.append("quantity",i);
+//        //This line of code is what acutely pushes the document to the cloud
+            col.insertOne(doc);
+//            System.out.println("Insert is completed");
+        	
+        } else {
+        	
+        	col.updateOne(Filters.eq("itemName", itemName ), Updates.inc("quantity", i));
+            System.out.println("increment complete");
+        
+        
+//        while(cursor.hasNext()) {
+//        	System.out.println(cursor.next());
+        	
+        }
+        
+        
+////    //Insert record into collection by creating a document now you will be able to see the database
+//        Document doc =new Document("itemName",itemName);
+//        doc.append("id",7);
+//        doc.append("Amount in inventory",quantity);
+////    //This line of code is what acutely pushes the document to the cloud
+//        col.insertOne(doc);
+////        System.out.println("Insert is completed");
 	}
 	
 	
@@ -259,8 +291,29 @@ public class homePage extends JFrame
 	//search use case
 	public void search()
 	{
-		String Response = JOptionPane.showInputDialog("what item are you looking for");
-		System.out.println(Response);
+		String search1 = JOptionPane.showInputDialog("What item are you looking for?");
+		System.out.println(search1);
+		
+		//specific document retrieving in a collection
+		BasicDBObject searchQuery = new BasicDBObject();
+		searchQuery.put("itemName", search1);
+		
+		System.out.println("Retrieving specific Mongo Document");
+		String credentials = "mongodb+srv://user:user@cluster0.ho2gy.mongodb.net/myFirstDatabase?retryWrites=true&w=majority"; //connects to database
+        MongoClient client = MongoClients.create(credentials); //logged into the user in the database
+        MongoDatabase db = client.getDatabase("SEProject"); //selects correct project
+        MongoCollection col = db.getCollection( "Inventory");
+        MongoCursor<Document> cursor = col.find(searchQuery).iterator();
+        
+        if(!cursor.hasNext()) {
+        	System.out.println("Item does not exist");
+        	
+        }
+        
+        while(cursor.hasNext()) {
+        	System.out.println(cursor.next());
+        	
+        }
 	}
 	
 	
