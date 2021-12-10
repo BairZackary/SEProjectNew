@@ -20,6 +20,7 @@ public class DemoOne
 		//logGui.display(); //displays log in page
 		
 		homePage homeGUI = new homePage(); //creates a homePage.java object
-		homeGUI.display(); //displays the home page
+		//homeGUI.display(); //displays the home page
+		homeGUI.updateList();
     }
 }

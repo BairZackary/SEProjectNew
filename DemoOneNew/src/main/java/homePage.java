@@ -4,6 +4,12 @@
 //addItem() worked on by jordan, jorge, and raymond
 
 
+//TODO some todos in the code
+//TODO instead of global variables, pass as parameters
+//TODO standardize all string inputs
+//TODO try catch statements and while loops to make sure user input is good
+
+
 //imports for swing
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
@@ -39,6 +45,7 @@ import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.Filters;
 import com.mongodb.client.model.Updates;
 import com.mongodb.BasicDBObject;
+import com.mongodb.DBObject;
 import org.bson.Document;
 
 
@@ -47,7 +54,7 @@ public class homePage extends JFrame
 	//swing objects
 	private JPanel contentPane;
 	protected static Component frame;
-	//private JTextField userTextField;
+	static //private JTextField userTextField;
 	JList list = new JList(); //inventory list
 	JLabel inventoryManagerLbl = new JLabel("Inventory Manager");
 	JLabel listLbl = new JLabel("Inventory List");
@@ -104,7 +111,7 @@ public class homePage extends JFrame
 		inventoryManagerLbl.setHorizontalAlignment(SwingConstants.CENTER); //centers text within object
 		inventoryManagerLbl.setBounds(71, 38, 110, 23); //size of label
 		contentPane.add(inventoryManagerLbl);
-		listLbl.setHorizontalAlignment(SwingConstants.CENTER);
+		//listLbl.setHorizontalAlignment(SwingConstants.CENTER);
 		listLbl.setBounds(359, 59, 127, 14); //size of label
 		//TODO may need to re-center
 		contentPane.add(listLbl);
@@ -147,68 +154,6 @@ public class homePage extends JFrame
 		searchBtn.setBounds(60, 284, 137, 69); //button size
 		contentPane.add(searchBtn);
 		
-		//userTextField.setBounds(10, 510, 384, 128); //text field size
-		//contentPane.add(userTextField);
-		//userTextField.setColumns(10);
-		
-//		systemOutLbl.setHorizontalAlignment(SwingConstants.CENTER);
-//		systemOutLbl.setBounds(10, 510, 384, 128); //label size
-//		systemOutLbl.setText("Test");
-//		contentPane.add(systemOutLbl);
-		
-//		//enter button
-//		continueBtn.addActionListener(new ActionListener() {
-//			//button clicked action
-//			public void actionPerformed(ActionEvent e) {
-//			}
-//		});
-//		continueBtn.addMouseListener(new MouseAdapter() {
-//			@Override
-//			public void mouseClicked(MouseEvent e) {
-//				Object[] testArrayTwo = new Object[3];
-//		        testArrayTwo[0] = "World";
-//		        testArrayTwo[1] = "Hello";
-//		        testArrayTwo[2] = "Test";
-//		        list.setListData(testArrayTwo);
-//			}
-//		});
-//		continueBtn.setBounds(439, 542, 222, 96); //size of button
-//		contentPane.add(continueBtn);
-		
-		
-		//trying to get the list to work
-//		ArrayList<Document> inventoryList = new ArrayList<Document>();
-//		try
-//    	{
-//	    	String credentials = "mongodb+srv://user:user@cluster0.ho2gy.mongodb.net/myFirstDatabase?retryWrites=true&w=majority"; //connects to database
-//	        MongoClient client = MongoClients.create(credentials); //logged into the user in the database
-//	        //System.out.println("Created Mongo Connection successfully"); 
-//	        MongoDatabase db = client.getDatabase("SEProject"); //selects correct project
-//	        MongoCollection col = db.getCollection( "Inventory"); //selects which collection
-//
-//	        System.out.println(col.find());
-//	        
-//	        Object[] testArray = new Object[4]; 
-//	        testArray[0] = "Hello";
-//	        testArray[1] = "World";
-//	        list.setListData(testArray);
-//	        
-//	        FindIterable<Document> iterDoc = col.find(); //grabs all documents from database
-//	        int i = 1;
-//	        // Getting the iterator
-//	        System.out.println("Listing All Mongo Documents");
-//	        Iterator it = iterDoc.iterator(); //goes to next fetched item
-//	        while (it.hasNext()) 
-//	        {
-//	            System.out.println(it.next());
-//	            testArray[i - 1] = 
-//	            i++;
-//	        } 
-//	        list.setListData(testArray);
-//    	}catch (Exception e) //log in unsuccessful
-//    	{
-//    		System.out.println("Incorrect credentials.");
-//    	}
 	}
 	
 	
@@ -369,4 +314,67 @@ public class homePage extends JFrame
 	{
 		
 	}
+	
+	
+	/**
+	 * Updates list
+	 * Ideas:
+	 * we can print to the consol
+	 * search for the item
+	 * then parse the list to only give us what we want to be displayed
+	 * iterater gives the id, itemName, quantity - everything
+	 */
+	public static void updateList()
+	{
+		//ArrayList<Document> inventoryList = new ArrayList<Document>();
+		try
+    	{
+	    	String credentials = "mongodb+srv://user:user@cluster0.ho2gy.mongodb.net/myFirstDatabase?retryWrites=true&w=majority"; //connects to database
+	        MongoClient client = MongoClients.create(credentials); //logged into the user in the database
+	        //System.out.println("Created Mongo Connection successfully"); 
+	        MongoDatabase db = client.getDatabase("SEProject"); //selects correct project
+	        MongoCollection col = db.getCollection( "Inventory"); //selects which collection
+
+	        System.out.println(col.find());
+	        
+//	        Object[] testArray = new Object[4]; 
+//	        testArray[0] = "Hello";
+//	        testArray[1] = "World";
+//	        list.setListData(testArray);
+	        
+	        FindIterable<Document> iterDoc = col.find(); //grabs all documents from database
+	        //System.out.println(iterDoc.getClass().getSimpleName());
+	        int i = 1;
+//	        // Getting the iterator
+//	        System.out.println("Listing All Mongo Documents");
+	        Iterator it = iterDoc.iterator(); //goes to next fetched item
+	        while (it.hasNext()) 
+	        {
+	        	//col.find(Filters.eq("itemName"), "tacos");
+	        	System.out.println(col.find(Filters.eq("quantity")) + " " + i);
+	        	//System.out.println(col.get("itemName");
+	        	it.next();
+	        	//String test = col.get
+	        	
+	        	
+	        	//System.out.println(it.next());
+	        	
+	        	//DBObject dbo = it.next();
+	        	//it.next();
+	        	
+	        	//String test = it.next();
+	        	//System.out.println(it.next());
+	            
+	            //System.out.println(it.next().get("itemName"));
+	            //testArray[i - 1] = 
+	            i++;
+	        } 
+	        //list.setListData(testArray);
+    	}catch (Exception e) //log in unsuccessful
+    	{
+    		System.out.println("Incorrect credentials.");
+    		e.printStackTrace(); //I think this will print the error to the console
+    	}
+	}
+	
 }
