@@ -1,14 +1,10 @@
 //initially written by zackary, with assistance from jorge and jordan
-//changes made by raymond
-//functions added by jorge
+//mongo done by raymond
+//functions of buttons added by jorge and ray
 //addItem() worked on by jordan, jorge, and raymond
+//removeItem() worked on by jordan, jorge, and zack
 //updateList() worked on by zack and jordan
-
-
-//TODO some todos in the code
-//TODO instead of global variables, pass as parameters
-//TODO standardize all string inputs
-//TODO try catch statements and while loops to make sure user input is good
+//search() worked on by all of us
 
 
 //imports for swing
@@ -18,7 +14,6 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
-//import javax.swing.text.Document; //conflicts with org.bson.Document
 import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
@@ -47,7 +42,6 @@ import com.mongodb.client.model.Filters;
 import com.mongodb.client.model.Updates;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
-
 import org.bson.BsonDocument;
 import org.bson.Document;
 
@@ -57,17 +51,12 @@ public class homePage extends JFrame
 	//swing objects
 	private JPanel contentPane;
 	protected static Component frame;
-	static //private JTextField userTextField;
-	JList list = new JList(); //inventory list
+	static JList list = new JList(); //inventory list
 	JLabel inventoryManagerLbl = new JLabel("Inventory Manager");
 	JLabel listLbl = new JLabel("Inventory List");
 	JButton addItemBtn = new JButton("Add Item"); //calls addItem()
 	JButton removeItemBtn = new JButton("Remove Item"); //calls removeItem()
 	JButton searchBtn = new JButton("Search"); //calls search()
-	//static //JTextField userTextField = new JTextField();
-	//static JLabel systemOutLbl = new JLabel("System Output");
-	//JButton continueBtn = new JButton("Enter");
-	//JLabel userInput = new JLabel("User Input");
 
 	
 	public static void main(String[] args) {
@@ -114,9 +103,7 @@ public class homePage extends JFrame
 		inventoryManagerLbl.setHorizontalAlignment(SwingConstants.CENTER); //centers text within object
 		inventoryManagerLbl.setBounds(71, 38, 110, 23); //size of label
 		contentPane.add(inventoryManagerLbl);
-		//listLbl.setHorizontalAlignment(SwingConstants.CENTER);
 		listLbl.setBounds(359, 59, 127, 14); //size of label
-		//TODO may need to re-center
 		contentPane.add(listLbl);
 
 		//add item
@@ -127,7 +114,7 @@ public class homePage extends JFrame
 			//when mouse is clicked
 			public void mouseClicked(MouseEvent e) 
 			{
-				addItem();
+				addItem(); //calls add item
 			}
 		});
 		addItemBtn.setBounds(60, 84, 137, 58);
@@ -139,7 +126,7 @@ public class homePage extends JFrame
 			//when mouse is clicked
 			public void mouseClicked(MouseEvent e) 
 			{
-				removeItem();
+				removeItem(); //calls remove item
 			}
 		});
 		removeItemBtn.setBounds(60, 185, 137, 58);
@@ -151,7 +138,7 @@ public class homePage extends JFrame
 			//when button is clicked
 			public void mouseClicked(MouseEvent e) 
 			{
-				search();
+				search(); //calls search
 			}
 		});
 		searchBtn.setBounds(60, 284, 137, 69); //button size
@@ -167,15 +154,14 @@ public class homePage extends JFrame
 	public static void addItem()
 	{
 		String itemName = "";
-		itemName = JOptionPane.showInputDialog("What item is being added?");
+		itemName = JOptionPane.showInputDialog("What item is being added?").toUpperCase();
 		System.out.println(itemName); //testing user response
 		
 		String quantity = JOptionPane.showInputDialog("How many of the item would you like to add?");
 		int i = Integer.parseInt(quantity); //turning the string input into an int
 		System.out.println(i); //testing parse
 		
-		//TODO two options for outputting to the user
-		//systemOutLbl.setText(quantity + " " + itemName + " has been added to the inventory.");
+		//systemOutLbl.setText(quantity + " " + itemName + " has been added to the inventory."); //used for another way to output to user
 		JOptionPane.showMessageDialog(frame, quantity + " " + itemName + " " + "have been added.");
 		
 		//logging into MongoDB
@@ -183,7 +169,6 @@ public class homePage extends JFrame
 	    MongoClient client = MongoClients.create(credentials); //logged into the user in the database
 	    MongoDatabase db = client.getDatabase("SEProject"); //selects correct project
 	    MongoCollection col = db.getCollection( "Inventory"); //selects the correct items
-	    //TODO check that basic object import went to correct section as well as mongo cursor
 	    
 	    //looks for existing item in database
 	    BasicDBObject searchQuery = new BasicDBObject(); //used to query for items
@@ -192,7 +177,6 @@ public class homePage extends JFrame
         if(!cursor.hasNext()) //item not found
         { 
         	Document doc =new Document("itemName",itemName);//creates a new item with an itemName
-            //doc.append("id",7);
             doc.append("quantity",i); //adds a quantity to the item and adds the number being added
         	//This line of code is what acutely pushes the document to the cloud
             col.insertOne(doc); //pushes the item to the database
@@ -202,8 +186,7 @@ public class homePage extends JFrame
         else //item exists 
         { 
           col.updateOne(Filters.eq("itemName", itemName ), Updates.inc("quantity", i));
-            System.out.println("increment complete");
-            //TODO make sure filters and updates went to correct place    
+            System.out.println("increment complete"); 
         }
         
         //update the list
@@ -214,6 +197,7 @@ public class homePage extends JFrame
 	//remove item use case
 	public static void removeItem()
 	{
+		//the following is an idea for future improvement, beyond that of the project
 //		while (true)
 //		{
 //			try
@@ -230,7 +214,7 @@ public class homePage extends JFrame
 //		}
 		
 		//getting what to remove
-		String  itemName = JOptionPane.showInputDialog("What item is being removed?");
+		String  itemName = JOptionPane.showInputDialog("What item is being removed?").toUpperCase();
 		System.out.println(itemName); //testing user response
 		String quantity = JOptionPane.showInputDialog("How many of the item would you like to remove?");
 		int i = Integer.parseInt(quantity); //turning the string input into an int
@@ -241,27 +225,20 @@ public class homePage extends JFrame
 	    MongoClient client = MongoClients.create(credentials); //logged into the user in the database
 	    MongoDatabase db = client.getDatabase("SEProject"); //selects correct project
 	    MongoCollection col = db.getCollection( "Inventory"); //selects the correct items
-	    //TODO check that basic object import went to correct section as well as mongo cursor
 	    
 	    //looks for existing item in database
 	    BasicDBObject searchQuery = new BasicDBObject(); //used to query for items
 	    searchQuery.put("itemName", itemName); //queries for the item name
 	    MongoCursor<Document> cursor = col.find(searchQuery).iterator();
-	    //TODO use a try catch to determine that item does not exist
         if(!cursor.hasNext()) //item not found
         { 
         	JOptionPane.showMessageDialog(frame, "Your selected item does not exist.");
         	
-          
         } 
         else //item exists 
         { 
-        	//System.out.println("The negative is: " + (i * -1)); //making sure the number will come out negative
         	int removedAmount  = Math.abs(i) * -1; //makes the number entered into a negative
-        	col.updateOne(Filters.eq("itemName", itemName ), Updates.inc("quantity", removedAmount));
-        	//TODO we could use the set method rather than the inc function
-        	//TODO use try catch to make sure they give correct inputs
-            
+        	col.updateOne(Filters.eq("itemName", itemName ), Updates.inc("quantity", removedAmount)); //updates the requested item
         }
         
         //update the list
@@ -270,6 +247,7 @@ public class homePage extends JFrame
 	
 	
 	//sort inventory use case
+	//meant for future implementation
 	public static void sortInventory()
 	{
 		
@@ -279,7 +257,7 @@ public class homePage extends JFrame
 	//search use case
 	public static void search()
 	{
-		String requested = JOptionPane.showInputDialog("what item are you looking for");
+		String requested = JOptionPane.showInputDialog("what item are you looking for").toUpperCase();
 		System.out.println(requested);
 		
 		//specific document retrieving in a collection
@@ -288,28 +266,28 @@ public class homePage extends JFrame
 	    
 	    System.out.println("Retrieving specific Mongo Document");
 	    String credentials = "mongodb+srv://user:user@cluster0.ho2gy.mongodb.net/myFirstDatabase?retryWrites=true&w=majority"; //connects to database
-	        MongoClient client = MongoClients.create(credentials); //logged into the user in the database
-	        MongoDatabase db = client.getDatabase("SEProject"); //selects correct project
-	        MongoCollection col = db.getCollection( "Inventory"); //selects the correct items
-	        MongoCursor<Document> cursor = col.find(searchQuery).iterator();
+	    MongoClient client = MongoClients.create(credentials); //logged into the user in the database
+	    MongoDatabase db = client.getDatabase("SEProject"); //selects correct project
+	    MongoCollection col = db.getCollection( "Inventory"); //selects the correct items
+	    MongoCursor<Document> cursor = col.find(searchQuery).iterator();
 	        
-	        //looks for the requested items
-	        if(!cursor.hasNext()) 
-	        {
-	        	System.out.println("Item does not exist");
-	        }
+	    //looks for the requested items
+	    if(!cursor.hasNext()) 
+	    {
+	    	System.out.println("Item does not exist");
+	    }
 	        
-	        while(cursor.hasNext()) 
-	        {
-	        	System.out.println(cursor.next());
-	        }
-	}
-	
-	
-	//update inventory use case
-	public static void updateInventory()
-	{
-		
+	    while(cursor.hasNext()) 
+	    {
+	    	//System.out.println(cursor.next());
+	        Document doc = (Document)cursor.next(); //goes to next document
+	        String itemName = doc.getString("itemName");
+	        int quantity = doc.getInteger("quantity");
+	        	
+	        JOptionPane.showMessageDialog(frame, "There is currently " + quantity + " of " + itemName);
+	    }
+	        
+	    //updateList(); //for the other idea for how search would work
 	}
 	
 	
@@ -321,36 +299,36 @@ public class homePage extends JFrame
 		//Putting document data into an ArrayList
 	    String[] inventoryList = new String[100];
 	    try
-	      {
+	    {
 	    	//logging into mongo
-	    	  String credentials = "mongodb+srv://user:user@cluster0.ho2gy.mongodb.net/myFirstDatabase?retryWrites=true&w=majority"; //connects to database
-	    	  MongoClient client = MongoClients.create(credentials); //logged into the user in the database
-	          System.out.println("Created Mongo Connection successfully"); 
-	          MongoDatabase db = client.getDatabase("SEProject"); //selects correct project
-	          MongoCollection col = db.getCollection( "Inventory"); //selects which collection
-	          //System.out.println(col.find()); //prints out all documents
+	    	String credentials = "mongodb+srv://user:user@cluster0.ho2gy.mongodb.net/myFirstDatabase?retryWrites=true&w=majority"; //connects to database
+	    	MongoClient client = MongoClients.create(credentials); //logged into the user in the database
+	        System.out.println("Created Mongo Connection successfully"); 
+	        MongoDatabase db = client.getDatabase("SEProject"); //selects correct project
+	        MongoCollection col = db.getCollection( "Inventory"); //selects which collection
+	        //System.out.println(col.find()); //prints out all documents
 	          
-	          //grabbing all documents
-	          //Object[] testArray = new Object[4]; //temp array
-	          FindIterable<Document> iterDoc = col.find(); //grabs all documents from database
-	          int i = 1;
-	          // Getting the iterator
-	          System.out.println("Listing All Mongo Documents");
-	          Iterator it = iterDoc.iterator(); //goes to next fetched item
-	          while (it.hasNext()) //if there is another item
-	          {
-	        	  //grabbing important information from the document
-	        	  Document doc = (Document)it.next(); //goes to next document
-	        	  String itemDescription = doc.getString("itemName") + "    " + doc.getInteger("quantity");
-	        	  inventoryList[i - 1] = itemDescription; //adds the important information to the inventoryList
-	        	  i++;
-	          } 
-	      }
+	        //grabbing all documents
+	        //Object[] testArray = new Object[4]; //temp array
+	        FindIterable<Document> iterDoc = col.find(); //grabs all documents from database
+	        int i = 1;
+	        // Getting the iterator
+	        System.out.println("Listing All Mongo Documents");
+	        Iterator it = iterDoc.iterator(); //goes to next fetched item
+	        while (it.hasNext()) //if there is another item
+	        {
+	        	//grabbing important information from the document
+	        	Document doc = (Document)it.next(); //goes to next document
+	        	String itemDescription = doc.getString("itemName") + "    " + doc.getInteger("quantity");
+	        	inventoryList[i - 1] = itemDescription; //adds the important information to the inventoryList
+	        	i++;
+	        } 
+	    }
 	    catch (Exception e) //log in unsuccessful
-	      {
+	    {
 	        System.out.println("Error");
 	        e.printStackTrace(); //prints error to the console
-	      }
+	    }
 		
 	    list.setListData(inventoryList); //updates the list
 		

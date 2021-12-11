@@ -1,7 +1,8 @@
+//the driver for the program
+//system outputs were left in for future documentation
+
 //written by Zack and raymond Duenas
 
-
-import org.bson.Document;
 
 //list of mongodb imports
 import com.mongodb.client.FindIterable;
@@ -10,6 +11,7 @@ import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import javax.swing.SwingUtilities;
+import org.bson.Document;
 
 
 public class DemoOne 
@@ -21,9 +23,9 @@ public class DemoOne
 		logGui.display(); //displays log in page
 		
 		
-		//testing
-//		homePage homeGUI = new homePage(); //creates a homePage.java object
-//		homeGUI.display(); //displays the home page
-//		homeGUI.updateList();
+		//for testing
+		//homePage homeGUI = new homePage(); //creates a homePage.java object
+		//homeGUI.display(); //displays the home page
+		//homeGUI.updateList();
     }
 }

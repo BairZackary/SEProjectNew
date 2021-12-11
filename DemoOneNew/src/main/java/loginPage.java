@@ -1,7 +1,6 @@
-//TODO finished other than create account option
-	//extra, probably will not get to this
-//written by jorge and ray
-//to commit
+//written by jorge and jordan
+//mongo parts done by ray
+
 
 //imports used for swing
 import java.awt.event.ActionEvent;
@@ -19,6 +18,7 @@ import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
+
 
 public class loginPage implements ActionListener 
 {
@@ -98,7 +98,7 @@ public class loginPage implements ActionListener
 	        MongoCollection col = db.getCollection( "Inventory"); //selects which collection
 	        
 	        //The following line will force an error if the credentials are incorrect, log in was unsuccessful
-	        col.countDocuments();
+	        col.countDocuments(); //gets the number of documents
 	        System.out.println("Created Mongo Connection successfully"); 
 	        
 	        //closing log in page and opening home page
