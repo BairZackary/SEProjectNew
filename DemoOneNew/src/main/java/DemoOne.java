@@ -2,6 +2,7 @@
 //system outputs were left in for future documentation
 
 //written by Zack and raymond Duenas
+//worked on by all members of the group
 
 
 //list of mongodb imports
