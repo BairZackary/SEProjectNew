@@ -156,10 +156,26 @@ public class homePage extends JFrame
 		String itemName = "";
 		itemName = JOptionPane.showInputDialog("What item is being added?").toUpperCase();
 		System.out.println(itemName); //testing user response
+		int i;
+		String quantity;
 		
-		String quantity = JOptionPane.showInputDialog("How many of the item would you like to add?");
-		int i = Integer.parseInt(quantity); //turning the string input into an int
-		System.out.println(i); //testing parse
+		while (true)
+		{
+			try
+			{
+				quantity = JOptionPane.showInputDialog("How many of the item would you like to add?");
+				i = Integer.parseInt(quantity); //turning the string input into an int
+				System.out.println(i); //testing parse
+				
+				//correctly inputed
+				break;
+			}
+			catch (Exception e)
+			{
+				e.printStackTrace();
+			}
+		}
+		
 		
 		//systemOutLbl.setText(quantity + " " + itemName + " has been added to the inventory."); //used for another way to output to user
 		JOptionPane.showMessageDialog(frame, quantity + " " + itemName + " " + "have been added.");
@@ -197,28 +213,27 @@ public class homePage extends JFrame
 	//remove item use case
 	public static void removeItem()
 	{
-		//the following is an idea for future improvement, beyond that of the project
-//		while (true)
-//		{
-//			try
-//			{
-//				//everything would be in here
-//				//at the end add:
-//				//break
-//			}
-//			catch (Exception e)
-//			{
-//				//tell the user they had an input error
-//				//print stack error
-//			}
-//		}
-		
 		//getting what to remove
 		String  itemName = JOptionPane.showInputDialog("What item is being removed?").toUpperCase();
 		System.out.println(itemName); //testing user response
-		String quantity = JOptionPane.showInputDialog("How many of the item would you like to remove?");
-		int i = Integer.parseInt(quantity); //turning the string input into an int
-		System.out.println(i); //testing parse
+		int i;
+		while (true)
+		{
+			try
+			{
+				String quantity = JOptionPane.showInputDialog("How many of the item would you like to remove?");
+				i = Integer.parseInt(quantity); //turning the string input into an int
+				System.out.println(i); //testing parse
+				
+				//accepted input
+				break; //breaks out of the while loop
+			}
+			catch (Exception e)
+			{
+				e.printStackTrace();
+			}
+			
+		}
 		
 		//logging into MongoDB
 	    String credentials = "mongodb+srv://user:user@cluster0.ho2gy.mongodb.net/myFirstDatabase?retryWrites=true&w=majority"; //connects to database
@@ -275,6 +290,7 @@ public class homePage extends JFrame
 	    if(!cursor.hasNext()) 
 	    {
 	    	System.out.println("Item does not exist");
+	    	JOptionPane.showMessageDialog(frame, "Item does not exist.");
 	    }
 	        
 	    while(cursor.hasNext()) 

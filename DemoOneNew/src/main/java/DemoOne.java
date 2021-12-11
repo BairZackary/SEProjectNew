@@ -22,7 +22,7 @@ public class DemoOne
 		//full functionality
 		loginPage logGui = new loginPage(); //creates a loginPage.java object
 		logGui.display(); //displays log in page
-		
+			
 		
 		//for testing
 		//homePage homeGUI = new homePage(); //creates a homePage.java object
