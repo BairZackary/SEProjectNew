@@ -29,6 +29,7 @@ Allowed input parameters:
 Login page
 	Enter in your MongoDB credentials
 	Program will tell you if inputted incorrectly
+	Program will accept strings in the provided fields 
 Home page
 	When software asks for item name, any input is accepted
 	When asked for item quantity, program will only work if given an integer input
