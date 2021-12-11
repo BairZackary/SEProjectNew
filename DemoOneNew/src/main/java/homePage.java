@@ -257,7 +257,7 @@ public class homePage extends JFrame
 	//search use case
 	public static void search()
 	{
-		String requested = JOptionPane.showInputDialog("what item are you looking for").toUpperCase();
+		String requested = JOptionPane.showInputDialog("What item are you looking for?").toUpperCase();
 		System.out.println(requested);
 		
 		//specific document retrieving in a collection
