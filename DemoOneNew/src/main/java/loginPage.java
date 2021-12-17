@@ -19,7 +19,7 @@ import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 
-
+//worked on by Jorge and Jordan
 public class loginPage implements ActionListener 
 {
 	//user entered credentials, defined later on
@@ -90,6 +90,7 @@ public class loginPage implements ActionListener
         this.password = passwordText.getText(); //user enters password
     	
         //logging into mongodb
+	//Worked on by Raymond
     	try
     	{
     		final String credentials = "mongodb+srv://" + userName + ":" + password + "@cluster0.ho2gy.mongodb.net/myFirstDatabase?retryWrites=true&w=majority"; //connects to database
