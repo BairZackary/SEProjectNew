@@ -85,6 +85,7 @@ public class homePage extends JFrame
 	/**
 	 * Creates the frame and allows buttons to function.
 	 * jordan hidalgo: worked with Jorge and Zack to develop the structure of our home page.
+	 * zackary bair: assisted in creating GUI
 	 */
 	public homePage() 
 	{
@@ -154,6 +155,7 @@ public class homePage extends JFrame
 	//add item use case
 	//jorge Sanchez: worked on pop up prompts for user adding inventory, assisted in debugging
 	//jordan hidalgo: worked on code to add item to inventory, or add to the amount of an item if it already exists 
+	//zackary bair: added while and try/catch to fix incorrect inputs, added updateList() function call
 	public static void addItem()
 	{
 		String itemName = "";
@@ -216,6 +218,7 @@ public class homePage extends JFrame
 	//remove item use case
 	//jorge Sanchez: worked on pop up prompts for user removing inventory, assisted in debugging
 	//jordan hidalgo: worked on the code to remove item from inventory, or output that it doesn't exist if it isn't in the inventory
+	//zackary bair: added while and try/catch to fix incorrect inputs, added removedAmount to correctly subtract items, added updateList function call
 	public static void removeItem()
 	{
 		//getting what to remove
@@ -317,6 +320,7 @@ public class homePage extends JFrame
 	
 	// Updates list
 	// jordan hidalgo: worked on code to grab specific data from the database to place in the array that Zack had created
+	//zackary bair: created inventoryList, assisted in grabbing specific attributes from a document, adding to the array
 	public static void updateList()
 	{
 		//Putting document data into an ArrayList
