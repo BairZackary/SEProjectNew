@@ -151,6 +151,7 @@ public class homePage extends JFrame
 	
 	
 	//add item use case
+	//jordan hidalgo: worked on code to add item to inventory, or add to the amount of an item if it already exists 
 	public static void addItem()
 	{
 		String itemName = "";
@@ -211,6 +212,7 @@ public class homePage extends JFrame
 	
 	
 	//remove item use case
+	//jordan hidalgo: worked on the code to remove item from inventory, or output that it doesn't exist if it isn't in the inventory
 	public static void removeItem()
 	{
 		//getting what to remove
@@ -270,6 +272,7 @@ public class homePage extends JFrame
 	
 	
 	//search use case
+	//jordan hidalgo: worked on code to search database for an item and display its name/amount.
 	public static void search()
 	{
 		String requested = JOptionPane.showInputDialog("What item are you looking for?").toUpperCase();
@@ -307,9 +310,9 @@ public class homePage extends JFrame
 	}
 	
 	
-	/**
-	 * Updates list
-	 */
+	
+	// Updates list
+	// jordan hidalgo: worked on code to grab specific data from the database to place in the array that Zack had created
 	public static void updateList()
 	{
 		//Putting document data into an ArrayList
