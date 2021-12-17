@@ -84,6 +84,7 @@ public class homePage extends JFrame
 
 	/**
 	 * Creates the frame and allows buttons to function.
+	 * jordan hidalgo: worked with Jorge and Zack to develop the structure of our home page.
 	 */
 	public homePage() 
 	{
