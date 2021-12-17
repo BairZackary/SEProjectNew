@@ -152,6 +152,7 @@ public class homePage extends JFrame
 	
 	
 	//add item use case
+	//jorge Sanchez: worked on pop up prompts for user adding inventory, assisted in debugging
 	//jordan hidalgo: worked on code to add item to inventory, or add to the amount of an item if it already exists 
 	public static void addItem()
 	{
@@ -213,6 +214,7 @@ public class homePage extends JFrame
 	
 	
 	//remove item use case
+	//jorge Sanchez: worked on pop up prompts for user removing inventory, assisted in debugging
 	//jordan hidalgo: worked on the code to remove item from inventory, or output that it doesn't exist if it isn't in the inventory
 	public static void removeItem()
 	{
@@ -273,6 +275,7 @@ public class homePage extends JFrame
 	
 	
 	//search use case
+	//jorge Sanchez: worked on pop up prompts for user, assisted in debugging
 	//jordan hidalgo: worked on code to search database for an item and display its name/amount.
 	public static void search()
 	{
