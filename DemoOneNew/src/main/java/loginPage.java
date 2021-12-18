@@ -91,6 +91,7 @@ public class loginPage implements ActionListener
     	
         //logging into mongodb
 	//Worked on by Raymond
+	//Raymond Dueñas provided logic for calling homepage on lines 108 and 109
     	try
     	{
     		final String credentials = "mongodb+srv://" + userName + ":" + password + "@cluster0.ho2gy.mongodb.net/myFirstDatabase?retryWrites=true&w=majority"; //connects to database
