@@ -20,6 +20,7 @@ public class DemoOne
 	public static void main(String[] args) 
 	{
 		//full functionality
+		//Ray-provided the logic for the code in lines 24 and 25
 		loginPage logGui = new loginPage(); //creates a loginPage.java object
 		logGui.display(); //displays log in page
 			
