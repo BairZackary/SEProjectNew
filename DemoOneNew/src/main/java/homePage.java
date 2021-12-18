@@ -156,6 +156,7 @@ public class homePage extends JFrame
 	//jorge Sanchez: worked on pop up prompts for user adding inventory, assisted in debugging
 	//jordan hidalgo: worked on code to add item to inventory, or add to the amount of an item if it already exists 
 	//zackary bair: added while and try/catch to fix incorrect inputs, added updateList() function call
+	//Raymond Duenas: provided the mongoDB parts of the funciton helped with logic of type casting solution in line173
 	public static void addItem()
 	{
 		String itemName = "";
@@ -219,6 +220,7 @@ public class homePage extends JFrame
 	//jorge Sanchez: worked on pop up prompts for user removing inventory, assisted in debugging
 	//jordan hidalgo: worked on the code to remove item from inventory, or output that it doesn't exist if it isn't in the inventory
 	//zackary bair: added while and try/catch to fix incorrect inputs, added removedAmount to correctly subtract items, added updateList function call
+	//Raymond Duenas: provided the mongoDB parts of the funciton helped with logic of type casting solution in line235
 	public static void removeItem()
 	{
 		//getting what to remove
@@ -280,6 +282,7 @@ public class homePage extends JFrame
 	//search use case
 	//jorge Sanchez: worked on pop up prompts for user, assisted in debugging
 	//jordan hidalgo: worked on code to search database for an item and display its name/amount.
+	//Raymond Duenas: provided the mongoDB parts of the funciton
 	public static void search()
 	{
 		String requested = JOptionPane.showInputDialog("What item are you looking for?").toUpperCase();
@@ -321,6 +324,7 @@ public class homePage extends JFrame
 	// Updates list
 	// jordan hidalgo: worked on code to grab specific data from the database to place in the array that Zack had created
 	//zackary bair: created inventoryList, assisted in grabbing specific attributes from a document, adding to the array
+	//Raymond Duenas: provided the mongoDB parts of the funciton
 	public static void updateList()
 	{
 		//Putting document data into an ArrayList
